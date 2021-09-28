@@ -6,7 +6,7 @@ the framework for the Homework and Project as below:
 <ul>
 <li>Project Consultation: Tue, 28 Sep, 0900 - 1300 hr</li>
 <li>Project Presentation: Tue, 19 Oct, 0900 - 1300 hr</li>
-<li>See details <a href="https://docs.google.com/document/d/1HxLjVltFH4Imq2mjJn6eIwhB3158NwAo/edit)">here</a></li>
+<li>See details <a href="https://docs.google.com/document/d/1HxLjVltFH4Imq2mjJn6eIwhB3158NwAo/edit">here</a></li>
 <li>Deadline for homework & project submission: Mon, 18 Oct, 1200 hr</li>
 <li>Submission (email to qinjiang03@gmail.com):</li>
     <ul><li>Homework:</li>
