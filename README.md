@@ -1,10 +1,10 @@
 **Capstone Project**
-(issued in an email from qinjiang03@gmail.com dated Aug 24, 2021 as attachment Capstone Project.pdf)
+(issued in an email from qinjiang03@gmail.com dated Aug 24, 2021 as attachment [Capstone Project.pdf](./Capstone Project.pdf))
 
 <ul>
 <li>Project Consultation: Tue, 28 Sep, 0900 - 1300 hr</li>
 <li>Project Presentation: Tue, 19 Oct, 0900 - 1300 hr</li>
-<li>See details here</li>
+<li>See details [here](https://docs.google.com/document/d/1HxLjVltFH4Imq2mjJn6eIwhB3158NwAo/edit)</li>
 <li>Deadline for homework & project submission: Mon, 18 Oct, 1200 hr</li>
 <li>Submission (email to qinjiang03@gmail.com):</li>
     <ul><li>Homework:</li>
@@ -23,9 +23,9 @@
 **Project Objective(s)**
 Create a TODO-list CRUD API with these below endpoints:
 <ul>
-<li>\[Public] A registration endpoint that would accept an email and password, and rejects any emails that have been registered before</li>
-<li>\[Public] A login endpoint that would return a JSON Web token that could be used on authenticated endpoint</li>
-<li>\[Auth-ed] CRUD endpoints for TODO lists:</li>
+<li>[Public] A registration endpoint that would accept an email and password, and rejects any emails that have been registered before</li>
+<li>[Public] A login endpoint that would return a JSON Web token that could be used on authenticated endpoint</li>
+<li>[Auth-ed] CRUD endpoints for TODO lists:</li>
     <ul>
 	<li>A Create endpoint with the list being created belongs to and can only be accessed by the creator or anyone added to access the list</li>
 	<li>A GET all TODO-list endpoint that would return an array of TODO-lists with their titles based on who the currently authenticated user is</li>
