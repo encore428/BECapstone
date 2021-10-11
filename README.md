@@ -89,6 +89,10 @@ sets out the framework for the Homework and Project as below:
 </tr>
 </table>
 
+**Database Set-up**
+- To create tables: `npm run db:migrate`
+- To clear tables and reset sequence number to 1: `npm run db:clear`
+
 **Test coverage**
 
 File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
