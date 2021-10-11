@@ -67,8 +67,8 @@ module.exports = (pool) => {
     // now that an old actl exists
     const oldActl = new Actl(chkActl.rows[0])
     if (actl.rwlv===0) {
-       // this is a DELETE, delete actl and return
-      const res = await pool.query(
+      // this is a DELETE, delete actl and return
+      await pool.query(
         'DELETE FROM Actls WHERE id=$1 RETURNING id,tid,uid,rwlv',
         [oldActl.id]
       )

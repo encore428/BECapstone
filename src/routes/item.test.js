@@ -3,7 +3,7 @@ const request = require('supertest')
 const utils = require('../../tests/utils')
 
 const app = utils.app
-const db = utils.db
+//const db = utils.db
 
 beforeAll(async () => {
   console.log('******** BEGIN unit tests for item **** ')
@@ -27,8 +27,8 @@ afterAll(async () => {
 describe('TASK Unit Tests - set-up Todos', () => {
 
   describe('0: POST/todos to create Todos', () => {
-    for (idx=0;idx<utils.todos.length;idx++) {
-      const id = idx+1;
+    for (let idx=0;idx<utils.todos.length;idx++) {
+      const id=idx+1
       it(`successful creation of Todo_${id} by User_${utils.todos[id-1].uid} using login token`, async () => {
         const auid=utils.todos[id-1].uid
         const expected = JSON.parse(JSON.stringify(utils.todos[id-1]))
@@ -39,105 +39,105 @@ describe('TASK Unit Tests - set-up Todos', () => {
           .expect(201)
           .then(response => {
             expect(response.body)
-            .toEqual(expected)
+              .toEqual(expected)
           })
       })
-      }
+    }
   })
 })
 
 describe('TASK Unit Tests - negative test cases', () => {
   describe('1: POST/item, input validation, reject with a message', () => {
     it('should reject 400 when body is absent', async () => {
-        const auid=1
-        return await request(app)
+      const auid=1
+      return await request(app)
         .post('/items')
         .set('Authorization', utils.credentials[auid-1].token)
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title is mandatory'})
+            .toEqual({message: 'title is mandatory'})
         })
     })
     it('should reject 400 when title missing in body', async () => {
-        const tid = 'xyz'
-        const auid=1
-        return await request(app)
-          .post('/items')
-          .set('Authorization', utils.credentials[auid-1].token)
-          .send({name: 'a name', tid})
+      const tid = 'xyz'
+      const auid=1
+      return await request(app)
+        .post('/items')
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({name: 'a name', tid})
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title is mandatory'})
+            .toEqual({message: 'title is mandatory'})
         })
     })
     it('should reject 400 when blank title in body', async () => {
-        const tid = 'xyz'
-        const auid=1
-        return await request(app)
-          .post('/items')
-          .set('Authorization', utils.credentials[auid-1].token)
-          .send({title: ' ', tid})
+      const tid = 'xyz'
+      const auid=1
+      return await request(app)
+        .post('/items')
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: ' ', tid})
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title is mandatory'})
+            .toEqual({message: 'title is mandatory'})
         })
     })
     //
     it('should reject 400 when body.tid is not nemeric', async () => {
-        const tid = 'xyz'
-        const auid=1
-        return await request(app)
-          .post('/items')
-          .set('Authorization', utils.credentials[auid-1].token)
-          .send({title: 'this is a valid title', tid})
-          .expect(400)
-          .then(response => {
-            expect(response.body)
+      const tid = 'xyz'
+      const auid=1
+      return await request(app)
+        .post('/items')
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: 'this is a valid title', tid})
+        .expect(400)
+        .then(response => {
+          expect(response.body)
             .toEqual({message: 'tid should be a positive integer'})
-          })
+        })
     })
     it('should reject 400 when body.tid is 0', async () => {
-        const tid = 0
-        const auid=1
-        return await request(app)
-          .post('/items')
-          .set('Authorization', utils.credentials[auid-1].token)
-          .send({title: 'this is a valid title', tid})
-          .expect(400)
-          .then(response => {
-            expect(response.body)
+      const tid = 0
+      const auid=1
+      return await request(app)
+        .post('/items')
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: 'this is a valid title', tid})
+        .expect(400)
+        .then(response => {
+          expect(response.body)
             .toEqual({message: 'tid should be a positive integer'})
-          })
+        })
     })
     it('should reject 400 when body.tid is negative', async () => {
-        const tid = -6
-        const auid=1
-        return await request(app)
-          .post('/items')
-          .set('Authorization', utils.credentials[auid-1].token)
-          .send({title: 'this is a valid title', tid})
-          .expect(400)
-          .then(response => {
-            expect(response.body)
+      const tid = -6
+      const auid=1
+      return await request(app)
+        .post('/items')
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: 'this is a valid title', tid})
+        .expect(400)
+        .then(response => {
+          expect(response.body)
             .toEqual({message: 'tid should be a positive integer'})
-          })
+        })
     })
     //
     it('should reject 404 when Todo_(body.tid) does not exist', async () => {
-        const tid = 10
-        const auid=1
-        return await request(app)
-          .post('/items')
-          .set('Authorization', utils.credentials[auid-1].token)
-          .send({title: 'this is a valid title', tid})
-          .expect(404)
-          .then(response => {
-            expect(response.body)
+      const tid = 10
+      const auid=1
+      return await request(app)
+        .post('/items')
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: 'this is a valid title', tid})
+        .expect(404)
+        .then(response => {
+          expect(response.body)
             .toEqual({message: `Todo_${tid} does not exist`})
-          })
+        })
     })
   })
 
@@ -151,7 +151,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive integer'})
+            .toEqual({message: ':id has to be a positive integer'})
         })
     })
     it('should reject 400 when param iid is 0', async () => {
@@ -163,7 +163,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive integer'})
+            .toEqual({message: ':id has to be a positive integer'})
         })
     })
     it('should reject 400 when param iid is negative', async () => {
@@ -175,7 +175,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive integer'})
+            .toEqual({message: ':id has to be a positive integer'})
         })
     })
     //
@@ -188,7 +188,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'you must provide a least one of title, completed, tid'})
+            .toEqual({message: 'you must provide a least one of title, completed, tid'})
         })
     })
     it('should reject 400 when body has none of the required data', async () => {
@@ -201,7 +201,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'you must provide a least one of title, completed, tid'})
+            .toEqual({message: 'you must provide a least one of title, completed, tid'})
         })
     })
     //
@@ -216,7 +216,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title should be a string'})
+            .toEqual({message: 'title should be a string'})
         })
     })
     it('should reject 400 when body.title is blank', async () => {
@@ -230,7 +230,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title should not be blank'})
+            .toEqual({message: 'title should not be blank'})
         })
     })
     //
@@ -239,13 +239,13 @@ describe('TASK Unit Tests - negative test cases', () => {
       const tid='xyz'
       const auid=1
       return await request(app)
-      .put(`/items/${iid}`)
+        .put(`/items/${iid}`)
         .set('Authorization', utils.credentials[auid-1].token)
         .send({title: 'this is a valid title', completed: true, tid})
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'tid if provided, has to be a positive integer'})
+            .toEqual({message: 'tid if provided, has to be a positive integer'})
         })
     })
     it('should reject 400 when body.tid is 0', async () => {
@@ -253,13 +253,13 @@ describe('TASK Unit Tests - negative test cases', () => {
       const tid=0
       const auid=1
       return await request(app)
-      .put(`/items/${iid}`)
+        .put(`/items/${iid}`)
         .set('Authorization', utils.credentials[auid-1].token)
         .send({title: 'this is a valid title', tid})
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'tid if provided, has to be a positive integer'})
+            .toEqual({message: 'tid if provided, has to be a positive integer'})
         })
     })
     it('should reject 400 when body.tid is negative', async () => {
@@ -267,13 +267,13 @@ describe('TASK Unit Tests - negative test cases', () => {
       const tid=-5
       const auid=1
       return await request(app)
-      .put(`/items/${iid}`)
-      .set('Authorization', utils.credentials[auid-1].token)
+        .put(`/items/${iid}`)
+        .set('Authorization', utils.credentials[auid-1].token)
         .send({title: 'this is a valid title', tid})
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'tid if provided, has to be a positive integer'})
+            .toEqual({message: 'tid if provided, has to be a positive integer'})
         })
     })
     //
@@ -282,13 +282,13 @@ describe('TASK Unit Tests - negative test cases', () => {
       const tid='xyz'
       const auid=1
       return await request(app)
-      .put(`/items/${iid}`)
+        .put(`/items/${iid}`)
         .set('Authorization', utils.credentials[auid-1].token)
         .send({title: 'this is a valid title', completed: 'xyz', tid})
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'completed if provided, has to be a boolean'})
+            .toEqual({message: 'completed if provided, has to be a boolean'})
         })
     })
     it('should reject 404 when param iid does not exist', async () => {
@@ -301,7 +301,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(404)
         .then(response => {
           expect(response.body)
-          .toEqual({message: `Item_${iid} not found`})
+            .toEqual({message: `Item_${iid} not found`})
         })
     })
   })
@@ -316,7 +316,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive integer'})
+            .toEqual({message: ':id has to be a positive integer'})
         })
     })
     it('should reject 400 when param iid is 0', async () => {
@@ -328,7 +328,7 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive integer'})
+            .toEqual({message: ':id has to be a positive integer'})
         })
     })
     it('should reject 400 when param iid is negative', async () => {
@@ -340,20 +340,20 @@ describe('TASK Unit Tests - negative test cases', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive integer'})
+            .toEqual({message: ':id has to be a positive integer'})
         })
     })
     it('should reject 404 when param iid does not exist', async () => {
-        const iid = 1
-        const auid=1
-        return await request(app)
-          .delete(`/items/${iid}`)
-          .set('Authorization', utils.credentials[auid-1].token)
-          .expect(404)
-          .then(response => {
-            expect(response.body)
+      const iid = 1
+      const auid=1
+      return await request(app)
+        .delete(`/items/${iid}`)
+        .set('Authorization', utils.credentials[auid-1].token)
+        .expect(404)
+        .then(response => {
+          expect(response.body)
             .toEqual({message: `Item_${iid} not found`})
-          })
+        })
     })
   })
 })
@@ -367,55 +367,55 @@ describe('TASK Unit Tests - creation and retrival', () => {
           .post('/items')
           .set('Authorization', utils.credentials[utils.items[i].uid-1].token)
           .send({tid: utils.items[i].tid, title: utils.items[i].title})
-            .expect(201)
-            .then(response => {
-              expect(response.body)
-               .toEqual(utils.items[i])
-            })
+          .expect(201)
+          .then(response => {
+            expect(response.body)
+              .toEqual(utils.items[i])
+          })
       })
     }
     const auid=4
     const tid=1
-    it(`should retun 403 when user_4 creats Item for Todo_1 to which it has no access`, async () => {
+    it(`should retun 403 when user_${auid} creats Item for Todo_${tid} to which it has no access`, async () => {
       return await request(app)
         .post('/items')
         .set('Authorization', utils.credentials[auid-1].token)
         .send({tid, title: 'a title'})
-          .expect(403)
-          .then(response => {
-            expect(response.body)
-             .toEqual({message: `User_${auid} not authorised to add items to Todo_${tid}`})
-          })
+        .expect(403)
+        .then(response => {
+          expect(response.body)
+            .toEqual({message: `User_${auid} not authorised to add items to Todo_${tid}`})
+        })
     })
-})
+  })
 
   describe('5: GET/todos/0 return todos with items, positive test cases', () => {
-    for (idx=0;idx<utils.credentials.length;idx++) {
+    for (let idx=0;idx<utils.credentials.length;idx++) {
       const auid=idx+1
-        it(`GET/todos/0 should return todos with items created by user ${auid}`, async () => {
-          let expected = JSON.parse(JSON.stringify(utils.todos.filter((todo) => todo.uid===auid)))
-          let status=200
-          for (let j=0;j<expected.length;j++) {
-            expected[j].items = utils.items.filter((item) => item.tid===expected[j].id)
-          }
-          if (expected.length===0) {
-            expected={message: `User_${auid} has no accessible Todos`}
-            status=403
-          }
-          return request(app)
-            .get(`/todos/0`)
-            .set('Authorization', utils.credentials[auid-1].token)
-            .expect(status)
-            .then(response => {
-              expect(response.body)
+      it(`GET/todos/0 should return todos with items created by user ${auid}`, async () => {
+        let expected = JSON.parse(JSON.stringify(utils.todos.filter((todo) => todo.uid===auid)))
+        let status=200
+        for (let j=0;j<expected.length;j++) {
+          expected[j].items = utils.items.filter((item) => item.tid===expected[j].id)
+        }
+        if (expected.length===0) {
+          expected={message: `User_${auid} has no accessible Todos`}
+          status=403
+        }
+        return request(app)
+          .get('/todos/0')
+          .set('Authorization', utils.credentials[auid-1].token)
+          .expect(status)
+          .then(response => {
+            expect(response.body)
               .toEqual(expected)
           })
-        })
+      })
     }
   })
 
   describe('6: GET/todos/:tid return todo with items when requested by owner', () => {
-    it(`GET/todos/8 should return todo with items`, async () => {
+    it('GET/todos/8 should return todo with items', async () => {
       const tid=8
       const auid=3
       const expected = JSON.parse(JSON.stringify(utils.todos[tid-1]))
@@ -427,10 +427,10 @@ describe('TASK Unit Tests - creation and retrival', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-      })
+            .toEqual(expected)
+        })
     })
-    it(`GET/todos/3 should return todo with empty items`, async () => {
+    it('GET/todos/3 should return todo with empty items', async () => {
       const tid=3
       const auid=2
       const expected = JSON.parse(JSON.stringify(utils.todos[tid-1]))
@@ -442,15 +442,15 @@ describe('TASK Unit Tests - creation and retrival', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-      })
+            .toEqual(expected)
+        })
     })
   })
 })
 
 describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
   describe('7: PUT/items/:iid negative cases', () => {
-    it(`PUT/items/4 reject 403 when requested by non-owner User_1`, async () => {
+    it('PUT/items/4 reject 403 when requested by non-owner User_1', async () => {
       const iid=4
       const tid=10
       const auid=1
@@ -463,10 +463,10 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
-    it(`PUT/items/4 reject 404 when requested by owner User_2 wanting to change to non-exist Todo_10`, async () => {
+    it('PUT/items/4 reject 404 when requested by owner User_2 wanting to change to non-exist Todo_10', async () => {
       const iid=4
       const tid=10
       const auid=2
@@ -479,10 +479,10 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-       })
+            .toEqual(expected)
+        })
     })
-    it(`PUT/items/4 reject 403 when requested by owner User_2 wanting to change to non-owned Todo_7`, async () => {
+    it('PUT/items/4 reject 403 when requested by owner User_2 wanting to change to non-owned Todo_7', async () => {
       const iid=4
       const tid=7
       const auid=2
@@ -495,12 +495,12 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-       })
+            .toEqual(expected)
+        })
     })
   })
   describe('8: PUT/items/:iid positive cases', () => {
-    it(`PUT/items/4 by owner User_2 change title`, async () => {
+    it('PUT/items/4 by owner User_2 change title', async () => {
       const iid=4
       const auid=2
       const expected = JSON.parse(JSON.stringify(utils.items[iid-1]))
@@ -513,10 +513,10 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
-    it(`PUT/items/4 by owner User_2 change to completed`, async () => {
+    it('PUT/items/4 by owner User_2 change to completed', async () => {
       const iid=4
       const auid=2
       const expected = JSON.parse(JSON.stringify(utils.items[iid-1]))
@@ -530,10 +530,10 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
-    it(`PUT/items/4 by owner User_2 to switch to another Todo`, async () => {
+    it('PUT/items/4 by owner User_2 to switch to another Todo', async () => {
       const iid=4
       const tid=5
       const auid=2
@@ -549,10 +549,10 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-       })
+            .toEqual(expected)
+        })
     })
-    it(`GET/todos/4 by owner User_2 returns less items`, async () => {
+    it('GET/todos/4 by owner User_2 returns less items', async () => {
       const tid=4
       const auid=2
       const expected = JSON.parse(JSON.stringify(utils.todos[tid-1]))
@@ -564,16 +564,16 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-       })
+            .toEqual(expected)
+        })
     })
-    it(`GET/todos/5 by owner User_2 returns one more item transferred from Todo_4`, async () => {
+    it('GET/todos/5 by owner User_2 returns one more item transferred from Todo_4', async () => {
       const tid=5
       const auid=2
       const expected = JSON.parse(JSON.stringify(utils.todos[tid-1]))
       const status=200
       expected.items = JSON.parse(JSON.stringify(utils.items.filter((item) => item.tid===expected.id)))
-      newItem = JSON.parse(JSON.stringify(utils.items[4-1]))
+      const newItem = JSON.parse(JSON.stringify(utils.items[4-1]))
       // the following were updated in the few test case before this
       newItem.title = 'yet another new title'
       newItem.completed = true
@@ -585,8 +585,8 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
-       })
+            .toEqual(expected)
+        })
     })
   })
 })
@@ -605,7 +605,7 @@ describe('TASK Unit Tests - delete Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
   })
@@ -621,7 +621,7 @@ describe('TASK Unit Tests - delete Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
     const tid=utils.items[iid-1].tid
@@ -635,7 +635,7 @@ describe('TASK Unit Tests - delete Items to observe Todo ownership', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
   })

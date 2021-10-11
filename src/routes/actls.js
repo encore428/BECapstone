@@ -90,7 +90,8 @@ module.exports = (db) => {
       }
     }
     const newActl = email?new Actl({ tid, uid:0, rwlv }):new Actl({ tid, uid, rwlv })
-    const actl = await db.updateActl(newActl, auid, email, isPost=true)
+    const isPost=true
+    const actl = await db.updateActl(newActl, auid, email, isPost)
     if (actl.tid===0) {
       res.status(404).send({message: `Todo_${tid} does not exist`})
     } else if (actl.rwlv===-1) {
@@ -182,7 +183,8 @@ module.exports = (db) => {
       }
     }
     const updatedActl = new Actl({ tid, uid, rwlv })
-    const actl = await db.updateActl(updatedActl,auid,email,isPost=false)
+    const isPost=false
+    const actl = await db.updateActl(updatedActl,auid,email,isPost)
     if (actl.id===0) {
       res.status(404).send({message: `Actl for User_${email?email:uid} to Todo_${tid} does not exist`})
     } else if (actl.tid===0) {
@@ -260,7 +262,8 @@ module.exports = (db) => {
     }
     const rwlv = 0
     const updatedActl = new Actl({ tid, email, uid, rwlv })
-    const actl = await db.updateActl(updatedActl, auid, email, isPost=false)
+    const isPost=false
+    const actl = await db.updateActl(updatedActl, auid, email, isPost)
     if (actl.id===0) {
       res.status(404).send({message: `Actl for User_${email?email:uid} to Todo_${tid} does not exist`})
     } else if (actl.tid===0) {

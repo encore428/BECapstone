@@ -1,13 +1,12 @@
 //npm test tests/test_suites/auth.unit.test
-const { response } = require('express')
+//const { response } = require('express')
 const request = require('supertest')
 const utils = require('../../tests/utils')
 
 const app = utils.app
-const db = utils.db1
+//const app='https://todoitem.herokuapp.com/'
+//const db = utils.db1
 
-const username = 'unittest@abc.com'
-const password = '1234'
 
 beforeAll(async () => {
   console.log('******** BEGIN unit tests for auth **** ')
@@ -28,7 +27,7 @@ describe('AUTH Unit test', () => {
         .expect(200)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'Welcome to Todo API!'})
+            .toEqual({message: 'Welcome to Todo API!'})
         })
     })
     //
@@ -39,7 +38,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('GET/todos/0       should reject with 401 and a message', async () => {
@@ -48,7 +47,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('GET/todos/:tid    should reject with 401 and a message', async () => {
@@ -57,7 +56,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('POST/todos        should reject with 401 and a message', async () => {
@@ -66,7 +65,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('PUT/todos/:tid    should reject with 401 and a message', async () => {
@@ -75,7 +74,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('DELETE/todos/:tid should reject with 401 and a message', async () => {
@@ -84,7 +83,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     //
@@ -95,7 +94,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('PUT/items/:tid should reject with 401 with a message', async () => {
@@ -104,7 +103,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('DELETE/items/:tid should reject with 401 with a message', async () => {
@@ -113,7 +112,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     //
@@ -124,7 +123,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('PUT/actls/:tid should reject with 401 with a message', async () => {
@@ -133,7 +132,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
     it('DELETE/actls/:tid should reject with 401 with a message', async () => {
@@ -142,7 +141,7 @@ describe('AUTH Unit test', () => {
         .expect(401)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'User is not authenticated'})
+            .toEqual({message: 'User is not authenticated'})
         })
     })
   })
@@ -157,7 +156,7 @@ describe('AUTH Unit test', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'username missing'})
+            .toEqual({message: 'username missing'})
         })
     })
     it('/register without username should return 400 with message', async () => {
@@ -166,7 +165,7 @@ describe('AUTH Unit test', () => {
         .send({ password: utils.credentials[0].password })
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'username missing'})
+            .toEqual({message: 'username missing'})
         })
     })
     it('/register without password should return 400 with message', async () => {
@@ -175,7 +174,7 @@ describe('AUTH Unit test', () => {
         .send({ username: utils.credentials[0].username })
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'password missing'})
+            .toEqual({message: 'password missing'})
         })
     })
     it('/register with new user/password should return a token', async () => {
@@ -194,7 +193,7 @@ describe('AUTH Unit test', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: `Username ${utils.credentials[0].username} already exists`})
+            .toEqual({message: `Username ${utils.credentials[0].username} already exists`})
         })
     })
     //
@@ -205,7 +204,7 @@ describe('AUTH Unit test', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'username missing'})
+            .toEqual({message: 'username missing'})
         })
     })
     it('/login without username should return 400 with message', async () => {
@@ -214,7 +213,7 @@ describe('AUTH Unit test', () => {
         .send({ password: utils.credentials[0].password })
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'username missing'})
+            .toEqual({message: 'username missing'})
         })
     })
     it('/login without password should return 400 with message', async () => {
@@ -223,7 +222,7 @@ describe('AUTH Unit test', () => {
         .send({ username: utils.credentials[0].username })
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'password missing'})
+            .toEqual({message: 'password missing'})
         })
     })
     it('/login with wrong user should return 400 with message', async () => {
@@ -232,7 +231,7 @@ describe('AUTH Unit test', () => {
         .send({ username: 'nosuchuser', password: utils.credentials[0].password })
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'Invalid login credentials'})
+            .toEqual({message: 'Invalid login credentials'})
         })
     })
     it('/login with wrong password should return 400 with message', async () => {
@@ -241,7 +240,7 @@ describe('AUTH Unit test', () => {
         .send({ username: utils.credentials[0].username, password: 'wrong_password' })
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'Invalid login credentials'})
+            .toEqual({message: 'Invalid login credentials'})
         })
     })
     it('/login with valid username/password should return a token', async () => {
