@@ -9,7 +9,7 @@
     "db:migrate": "node scripts/migrate.js",
     "test": "jest --runInBand --coverage"
   },
-    "keywords": [],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
