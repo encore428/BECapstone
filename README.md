@@ -66,6 +66,13 @@ sets out the framework for the Homework and Project as below:
     <td>Completed with the file tests/int.test.js.</td>
 	<td>'npm test' to execute all tests</td>
 </tr>
+</table>
+
+<table>
+<tr><th>Other project requirements</th><th>References</th><th>status</th>
+</tr>
+<tr><td colspan="3">Bonus</td>
+</tr>
 <tr><td>Produce an OpenAPI(https://swagger.io/specification/) yaml specs, and use it for request and response validation with 
     express-openapi-validator(https://github.com/cdimascio/express-openapi-validator#readme).</td>
     <td></td>
