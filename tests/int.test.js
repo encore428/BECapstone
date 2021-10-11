@@ -630,10 +630,11 @@ describe('POST,PUT/items to observe actls', () => {
           })
     })
     it(`DELETE/actls the one record created above to revert database`, async () => {
-      const tid=5
-      const auid=2
-      const uid=1
-      const expected={message: `Actl for Todo_${tid} deleted successfully`}
+      const aid=3
+      const tid=utils.actls[aid-1].tid
+      const auid=utils.todos[utils.actls[aid-1].tid-1].uid
+      const uid=utils.actls[aid-1].uid
+      const expected=JSON.parse(JSON.stringify(utils.actls[aid-1]))
         return await request(app)
         .delete(`/actls/${tid}`)
         .set('Authorization', utils.credentials[auid-1].token)
@@ -806,7 +807,7 @@ describe('DELETE/todos,items success for owners and write-access', () => {
     it(`DELETE/ success by owner`, async () => {
       const tid=9
       const auid=utils.todos[tid-1].uid
-      const expected={message: `Todo ${tid} deleted successfully`}
+      const expected=JSON.parse(JSON.stringify(utils.todos[tid-1]))
       return await request(app)
         .delete(`/todos/${tid}`)
         .set('Authorization', utils.credentials[auid-1].token)
@@ -819,7 +820,7 @@ describe('DELETE/todos,items success for owners and write-access', () => {
     it(`DELETE/ success by user with write access`, async () => {
       const tid=5
       const auid=3
-      const expected={message: `Todo ${tid} deleted successfully`}
+      const expected=JSON.parse(JSON.stringify(utils.todos[tid-1]))
       return await request(app)
         .delete(`/todos/${tid}`)
         .set('Authorization', utils.credentials[auid-1].token)

@@ -54,13 +54,13 @@ Create a Todo list CRUD API with these below endpoints (note, the following has 
 		<li>If a non-zero {tid} is provided in the endpoint, and no Todo record exists with that {tid}, return with status code 404.</li>
 		<li>Soft-deleted records are considered non-existent.</li>
         <li>If a non-zero {tid} is provided in the endpoint, and a Todo record is found, yet the current authenticated user has no 
-		    necessary access to the Todo, do not perform any processing, but return with status code 403 with an error message.<li>
+		    necessary access to the Todo, do not perform any processing, but return with status code 403 with an error message.</li>
         <li>Necessary access means: Owner as well as users given write access to the Todo can GET/PUT/DELETE the Todo.  Users given
-            read access to the Todo can GET the Todo.<li>
+            read access to the Todo can GET the Todo.</li>
         <li>If a non-zero {tid} is provided in the endpoint, and a Todo record is found, and the current authenticated user has the 
 		    necessary access to the Todo, perform the required processing, and return with status code 200 with the Todo record.
 			In the case of create, return the created Todo record.  In the case of Update, return the updated todo record.  In the
-			case of Delete, return the Todo record before deletion.<li>
+			case of Delete, return the Todo record before deletion.</li>
 		<li>In a GET endpoint without {tid}, only Todo records to which the current authenticated user has read access to will be 
 		    retrieved.  Even if none is found, return code should be 200.</li>
         </ul>
