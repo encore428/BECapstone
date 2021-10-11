@@ -1,4 +1,5 @@
 const { Pool } = require('pg')
+const fs = require('fs')
 
 let pool;
 console.log(`process.env.MYHEROKU=${process.env.MYHEROKU}`)
