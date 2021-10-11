@@ -91,7 +91,6 @@ sets out the framework for the Homework and Project as below:
 
 **Test coverage**
 
------------------|---------|----------|---------|---------|-------------------
 File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 -----------------|---------|----------|---------|---------|-------------------
 All files        |   99.68 |    97.32 |     100 |   99.68 |
