@@ -1,8 +1,22 @@
 const { Pool } = require('pg')
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-})
+let pool;
+console.log(`process.env.MYHEROKU=${process.env.MYHEROKU}`)
+if (process.env.MYHEROKU === "true"){
+    pool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+            ca: fs.readFileSync(`${__dirname}/global-bundle.pem`)
+        }
+    })
+} else {
+    // local environment 
+    pool = new Pool({
+        connectionString: process.env.DATABASE_URL
+    })
+}
 
 const db = {
   ...require('./users')(pool),
