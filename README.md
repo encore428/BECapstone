@@ -27,9 +27,21 @@ sets out the framework for the Homework and Project as below:
 <tr><th>Project requirements</th><th>References</th><th>status</th>
 </tr>
 <tr>
+<tr><td>Source code zipped (exclude node_modules)</td>
+    <td>Please refer to the repository.</td>
+	<td>To be prepared only at final rollout.</td>
+</tr>
+<tr><td>Link to GitHub repo (either public or grant access)</td>
+    <td>https://github.com/encore428/BECapstone</td>
+	<td>Completed</td>
+</tr>
+<tr><td>Link to Heroku app</td>
+    <td>https://todoitem.herokuapp.com/</td>
+	<td>Completed</td>
+</tr>
 <tr><td>Create a Todo list CRUD API</td>
     <td><a href="./API_funcspec.md">Detailed specifications.</a></td>
-	<td>Completed. Extra features implemented.  Refer to <a href="./API_funcspec.md">specificatrions.</a></td>
+	<td>Completed. Extra features implemented.  Refer to the specifcations.</a></td>
 </tr>
 <tr><td>The app should be deployed to heroku.</td>
     <td>Deployed to https://todoitem.herokuapp.com/.</td>
@@ -40,8 +52,8 @@ sets out the framework for the Homework and Project as below:
 	<td>Completed.</td>
 </tr>
 <tr><td>For the message broker, you can use the free tier from rabbitmq.</td>
-    <td>Access control API are updated instantoulsy instead of placing in queue.</td>
-	<td>Not started</td>
+    <td></td>
+	<td>Not started.  Access control API are updated instantoulsy instead of placing in queue.</td>
 </tr>
 <tr><td>The code is required to be covered with unit test for at least 50%.</td>
     <td>The code has been covered with unit test 100%.  The unit test cases are all contained 

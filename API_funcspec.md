@@ -9,38 +9,38 @@ The app as delivered has these deviations;
 - Read only, or read and write access can be granted by the owner of a Todo for a non-owner users to access the Todo.
 - With write access, the guest user can update a Todo, add/update/delete Items belonging to that Todo.
 - With read only access, the guest user can update Items of the Todo.
-- Transfer of Items from one Todo to another can be acomplished by updating the tid of an Item.  This transfer
+- Transfer of Items from one Todo to another can be accomplished by updating the {tid} of an Item.  This transfer
   is considered deleting an Item from one Todo, and adding an Item to another Todo, and therefore requires
   write access to both Todos to accomplish.
   
-- Additional `/todos/0` endpoint.  Tis endpoint returns an array of Todos that the requester has read access to, and each
+- Additional `/todos/0` endpoint.  This endpoint returns an array of Todos that the requester has read access to, and each
   Todo will have its Items returned too.
   
 - Access control end-points are implemented with immediate update.  Delayed update via message queue approach is not 
-  implememted yet.
+  implemented yet.
 
-**Public Entry Points**
+**Public Entry Endpoints**
 - POST/register: registration endpoint to create new Users.  Reject a request if {email} has been registered before.
 - POST/login: login endpoint that returns a JSON Web token that can be used on authenticated endpoints.
 - Request body for both entry points have an {email} and a {password}.
 
-**Authenticated Functional Entry Points**
+**Authenticated Functional Entry Endpoints**
 - CRUD endpoints for Todos.
 - CUD endpoints to maintain access control for Todos.
 - CUD endpoints for Items.
 
 **CRUD endpoints for Todos**
 - POST/todos: Create a Todo record.  The record created belongs to the currently authenticated user.
-- GET/todos: Return an array of Todos to which the authenticated user has read access.  No children Item
-        is returned.  Status code is 200 even if no Todo is returned.
-- GET/todos/{tid}: Return the Todo identified by {tid}, include all of its children Items with status code 200.  
-  If Todo is not found, return with status code 404.  If Todo is found but the authenticated user does not have read acces to, return status code 403.
-- GET/todos/0: Return an array of Todos to which the authenticated user has read access to with status code 200. 
-	    For each Todo in the array, include all of its children Items.  If no Todo is found, return with status code 404.
+- GET/todos: Return with status code 200 and an array of Todos to which the authenticated user has read access.  
+  No children Item is returned.
+- GET/todos/{tid}: Return with status code 200 and the Todo identified by {tid}, include all of its children Items.  
+- GET/todos/0: Return with status code 200 and an array of Todos to which the authenticated user has read access to. 
+  This entry point differs from `GET/todos` in that Items of each Todo are also returned nested.
+  If no Todo is found, return with status code 404.
 - PUT/todos/{tid}: Update the title of Todo{tid}.
 - DELETE/todos/{tid}: Delete Todo{tid}. Soft-delete should be practiced.
 
-**Access Control**
+**Access Control in CRUD/Todos**
 - If a non-zero {tid} is provided in the endpoint, and no Todo record exists with that {tid}, return with status code 404.
 - Soft-deleted records are considered non-existent.
 - If a non-zero {tid} is provided in the endpoint, and a Todo record is found, yet the current authenticated user has no 
@@ -66,17 +66,17 @@ The app as delivered has these deviations;
 - Except for POST, return 404 if Access control record for User{email/uid} to Todo{tid} does not exist.
 - For POST request: If there is no existing access, create the access according to the request;  If the targetted access control 
   record already exists, upgraded to write access if the POST is to create a write, otherwise, the access control is not changed.
-- For PUT request, if the targetted access control record already exists, it will be updated to read or write as per the PUT 
-  request.
+- For PUT request, the targetted access control record will be updated to read or write as per the PUT request.
 - The request when executed successfully, will return with status code 200, and in JSON object format the access control record 
-  just created (POST), just updated (PUT), or just before deletion (DELETE).
+  just created (POST), just updated (PUT), or just before deletion (DELETE).  This is the case even if the POST or PUT request
+  does not require any change to the existing access control record.
 
 **CUD endpoints to maintain Items**
 - POST/items to create an Item as the child of Todo{tid}.
 - PUT/items/{iid} to update Item{iid}.
 - DELETE/items/{iid} to delete Item{iid}.
 - Request body to provide {tid} and {title} for POST; one or more of these: {title}, {completed}, {new_tid} for PUT.
-- Return 404 if Item{iid} does not exist.  When it exists, obtain {tid} from the Item record.
+- Return 404 if Item{iid} does not exist.  When it does exist, obtain {tid} from the retrieved Item record.
 - For PUT, if {new_tid} is provided, return 404 if Todo{new_tid} does not exist. 
 - For POST and DELETE, the authenticated user must have write access to Todo{tid} that is the parent of the Item{iid}.
 - For PUT, the authenticated user must have read or write access to Todo{tid} that is the parent of the Item{iid}. 
@@ -88,6 +88,7 @@ The app as delivered has these deviations;
 
 
 **Pending Task**
+
 Change all the Access control operations to be processed in an event-driven manner: The endpoint would 
 immediately respond with an appropriate 200 JSON response after putting an event into a message broker (recommended rabbitmq 
 as there’s a free plan).  There will be a separate worker process to consume the message and perform the update.
