@@ -7,6 +7,7 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "db:migrate": "node scripts/migrate.js",
+    "db:clear": "node scripts/clear.js",
     "test": "jest --runInBand --coverage"
   },
   "keywords": [],
