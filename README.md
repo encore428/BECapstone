@@ -49,13 +49,13 @@ Create a Todo list CRUD API with these below endpoints (note, the following has 
 	    For each Todo in the array, include all of its children Items.  If no Todo is found, return with status code 404.</li>
     <li>[PUT]/todos/{tid}: Update the title of Todo{tid}.</li>
     <li>[DELETE]/todos/{tid}: Delete Todo{tid}. Soft-delete should be practiced.
-	<li>In all the above endpoints, observe **access control** as follows:
+	<li>In all the above endpoints, observe <b>access control</b> as follows:
 	    <ul>
 		<li>If a non-zero {tid} is provided in the endpoint, and no Todo record exists with that {tid}, return with status code 404.</li>
 		<li>Soft-deleted records are considered non-existent.</li>
         <li>If a non-zero {tid} is provided in the endpoint, and a Todo record is found, yet the current authenticated user has no 
 		    necessary access to the Todo, do not perform any processing, but return with status code 403 with an error message.</li>
-        <li>Necessary access means: Owner as well as users given write access to the Todo can GET/PUT/DELETE the Todo.  Users given
+        <li><b>Necessary access</b> means: Owner as well as users given write access to the Todo can GET/PUT/DELETE the Todo.  Users given
             read access to the Todo can GET the Todo.</li>
         <li>If a non-zero {tid} is provided in the endpoint, and a Todo record is found, and the current authenticated user has the 
 		    necessary access to the Todo, perform the required processing, and return with status code 200 with the Todo record.
@@ -65,6 +65,7 @@ Create a Todo list CRUD API with these below endpoints (note, the following has 
 		    retrieved.  Even if none is found, return code should be 200.</li>
         </ul>
 	</li>
+	</ul>
 </li>
 <li>[Auth-ed] Access control endpoints to maintain access control for Todos.
     <ul>
@@ -105,6 +106,8 @@ Create a Todo list CRUD API with these below endpoints (note, the following has 
 	<li>For next enhancement, change all the Access control operations to be processed in an event-driven manner: The endpoint would 
 	    immediately respond with an appropriate 200 JSON response after putting an event into a message broker (recommended rabbitmq 
 		as there’s a free plan).  There will be a separate worker process to consume the message and perform the update.</li>
+	</ul>
+</li>
 <li>[Auth-ed] CUD endpoints for Items.  For POST/PUT/DELETE requests.
     <ul>
 	<li>[POST]/items to create an Item as the child of Todo{tid}.
@@ -131,6 +134,7 @@ Create a Todo list CRUD API with these below endpoints (note, the following has 
 			status code 200.</li>
 		</ul>
 	</li>
+	</ul>
 </li>
 </ul>
 	
