@@ -65,19 +65,30 @@ db.initialise = async () => {
   `)
 }
 
-db.clearActlsTables = async () => {
+db.clearActlsTable = async () => {
   await pool.query('DELETE FROM Actls')
   await pool.query('ALTER SEQUENCE actls_id_seq RESTART')
 }
-db.clearItemsTables = async () => {
+db.clearItemsTable = async () => {
   await pool.query('DELETE FROM Items')
   await pool.query('ALTER SEQUENCE items_id_seq RESTART')
 }
-db.clearTodosTables = async () => {
+db.clearTodosTable = async () => {
   await pool.query('DELETE FROM Todos')
   await pool.query('ALTER SEQUENCE todos_id_seq RESTART')
 }
-db.clearUsersTables = async () => {
+db.clearUsersTable = async () => {
+  await pool.query('DELETE FROM Users')
+  await pool.query('ALTER SEQUENCE users_id_seq RESTART')
+}
+
+db.clearAllTables = async () => {
+  await pool.query('DELETE FROM Actls')
+  await pool.query('ALTER SEQUENCE actls_id_seq RESTART')
+  await pool.query('DELETE FROM Items')
+  await pool.query('ALTER SEQUENCE items_id_seq RESTART')
+  await pool.query('DELETE FROM Todos')
+  await pool.query('ALTER SEQUENCE todos_id_seq RESTART')
   await pool.query('DELETE FROM Users')
   await pool.query('ALTER SEQUENCE users_id_seq RESTART')
 }

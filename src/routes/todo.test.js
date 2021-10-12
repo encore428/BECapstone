@@ -2,16 +2,14 @@ const request = require('supertest')
 const utils = require('../../tests/utils')
 
 const app = utils.app
-const db = utils.db
+//const db = utils.db
 
 beforeAll(async () => {
   console.log('******** BEGIN Todos unit tests **** ')
   await utils.setup()
-  utils.credentials[0].token = await utils.registerUser(utils.credentials[0].username, utils.credentials[0].password)
-  utils.credentials[1].token = await utils.registerUser(utils.credentials[1].username, utils.credentials[1].password)
-  utils.credentials[2].token = await utils.registerUser(utils.credentials[2].username, utils.credentials[2].password)
-  utils.credentials[3].token = await utils.registerUser(utils.credentials[3].username, utils.credentials[3].password)
-
+  for (let i=0;i<utils.credentials.length;i++) {
+    utils.credentials[i].token = await utils.registerUser(utils.credentials[i].username, utils.credentials[i].password)
+  }
 })
 
 afterAll(async () => {
@@ -26,48 +24,47 @@ describe('POST /todos', () => {
     it('POST/todos should return 400 for body missing', async () => {
       const uid=1
       return await request(app)
-        .post(`/todos`)
+        .post('/todos')
         .set('Authorization', utils.credentials[uid-1].token)
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title is mandatory'})
+            .toEqual({message: 'title is mandatory'})
         })
     })
     it('POST/todos should return 400 for body withuot title', async () => {
       const uid=1
       return await request(app)
-      .post(`/todos`)
-      .set('Authorization', utils.credentials[uid-1].token)
+        .post('/todos')
+        .set('Authorization', utils.credentials[uid-1].token)
         .send({
           name: 'title'
         })
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title is mandatory'})
+            .toEqual({message: 'title is mandatory'})
         })
     })
     it('POST/todos should return 400 for body with blank title', async () => {
-      const tid=10
       const uid=1
       return await request(app)
-      .post(`/todos`)
-      .set('Authorization', utils.credentials[uid-1].token)
+        .post('/todos')
+        .set('Authorization', utils.credentials[uid-1].token)
         .send({
           title: ''
         })
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: 'title is mandatory'})
+            .toEqual({message: 'title is mandatory'})
         })
     })
   })
 
   describe('2: POST/todos to create Todos in empty db', () => {
-    for (idx=0;idx<utils.todos.length;idx++) {
-      const id = idx+1;
+    for (let idx=0;idx<utils.todos.length;idx++) {
+      const id = idx+1
       const tokenType = id<8?' reg':' login'
       it(`successful creation of Todo_${id} by User_${utils.todos[id-1].uid} using ${tokenType} token`, async () => {
         const auid=utils.todos[id-1].uid
@@ -80,10 +77,10 @@ describe('POST /todos', () => {
           .expect(201)
           .then(response => {
             expect(response.body)
-            .toEqual(expected)
+              .toEqual(expected)
           })
       })
-      }
+    }
   })
 })
 
@@ -99,7 +96,7 @@ describe('GET /todos', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id must be a non-negative integer'})
+            .toEqual({message: ':id must be a non-negative integer'})
         })
     })
     it('GET/todos/-10 should return 400 for negative tid', async () => {
@@ -111,13 +108,13 @@ describe('GET /todos', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id must be a non-negative integer'})
+            .toEqual({message: ':id must be a non-negative integer'})
         })
     })
   })
 
   describe('2: GET/todos to return Todos belonging to requester', () => {
-    for (idx=0;idx<utils.credentials.length;idx++) {
+    for (let idx=0;idx<utils.credentials.length;idx++) {
       const auid=idx+1
       it(`should return all todos created by user ${auid}`, async () => {
         let expected = JSON.parse(JSON.stringify(utils.todos.filter((todo) => todo.uid===auid)))
@@ -128,7 +125,7 @@ describe('GET /todos', () => {
           .expect(status)
           .then(response => {
             expect(response.body)
-            .toEqual(expected)
+              .toEqual(expected)
           })
       })
     }
@@ -146,7 +143,7 @@ describe('GET /todos', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
     it('should return 403 when requester is not owner of Todo', async () => {
@@ -160,7 +157,7 @@ describe('GET /todos', () => {
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
     it('should return the Todo when requested by owner', async () => {
@@ -170,25 +167,25 @@ describe('GET /todos', () => {
       expected.items=[]
       const status=200
       return request(app)
-      .get(`/todos/${tid}`)
-      .set('Authorization', utils.credentials[auid-1].token)
+        .get(`/todos/${tid}`)
+        .set('Authorization', utils.credentials[auid-1].token)
         .expect(status)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
   })
   
   describe('4: GET/todos/0 to return Todos or 403', () => {
-    for (idx=0;idx<utils.credentials.length;idx++) {
+    for (let idx=0;idx<utils.credentials.length;idx++) {
       const auid=idx+1
       it(`should return ${auid<4?'all todos created by':'403 for'} User_${auid}${auid<4?'':' who owns no Todos'}`, async () => {
         const expected = auid<4
-                ?JSON.parse(JSON.stringify(utils.todos.filter((todo) => todo.uid===auid)))
-                :{message: `User_${auid} has no accessible Todos`}
+          ?JSON.parse(JSON.stringify(utils.todos.filter((todo) => todo.uid===auid)))
+          :{message: `User_${auid} has no accessible Todos`}
         if (auid<4) {
-          for (j=0;j<expected.length;j++) {
+          for (let j=0;j<expected.length;j++) {
             expected[j].items = []
           }
         }
@@ -199,8 +196,8 @@ describe('GET /todos', () => {
           .expect(status)
           .then(response => {
             expect(response.body)
-            .toEqual(expected)
-        })
+              .toEqual(expected)
+          })
       })
     }
   })
@@ -300,7 +297,7 @@ describe('PUT /todos', () => {
         .expect(200)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
     it('PUT/todos/1 should return 200 when updated with new title', async () => {
@@ -317,7 +314,7 @@ describe('PUT /todos', () => {
         .expect(200)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
   })
@@ -336,7 +333,7 @@ describe('DELETE /todos', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive number'})
+            .toEqual({message: ':id has to be a positive number'})
         })
     })
     it('DELETE/todos/-10 should return 400 for negative tid', async () => {
@@ -348,7 +345,7 @@ describe('DELETE /todos', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive number'})
+            .toEqual({message: ':id has to be a positive number'})
         })
     })
     it('DELETE/todos/0 should return 400 for zero tid', async () => {
@@ -360,7 +357,7 @@ describe('DELETE /todos', () => {
         .expect(400)
         .then(response => {
           expect(response.body)
-          .toEqual({message: ':id has to be a positive number'})
+            .toEqual({message: ':id has to be a positive number'})
         })
     })
     it('DELETE/todos/10 should return 404 non-existent Todo_10', async () => {
@@ -372,7 +369,7 @@ describe('DELETE /todos', () => {
         .expect(404)
         .then(response => {
           expect(response.body)
-          .toEqual({message: `Todo_${tid} not found`})
+            .toEqual({message: `Todo_${tid} not found`})
         })
     })
     it('DELETE/todos/9 by non-owner should return 403', async () => {
@@ -384,7 +381,7 @@ describe('DELETE /todos', () => {
         .expect(403)
         .then(response => {
           expect(response.body)
-          .toEqual({message: `User_${auid} not authorised to delete Todo_${tid}`})
+            .toEqual({message: `User_${auid} not authorised to delete Todo_${tid}`})
         })
     })
   })
@@ -400,7 +397,7 @@ describe('DELETE /todos', () => {
         .expect(200)
         .then(response => {
           expect(response.body)
-          .toEqual(expected)
+            .toEqual(expected)
         })
     })
   })

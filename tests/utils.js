@@ -56,10 +56,10 @@ utils.items = [
 
 utils.setup = async () => {
   await db.initialise()
-  await db.clearActlsTables()
-  await db.clearItemsTables()
-  await db.clearTodosTables()
-  await db.clearUsersTables()
+  await db.clearActlsTable()
+  await db.clearItemsTable()
+  await db.clearTodosTable()
+  await db.clearUsersTable()
 }
 
 utils.teardown = async () => {
@@ -70,7 +70,6 @@ utils.registerUser = async (username, password) => {
   const token = await authService.registerUser(username, password)
   return `Bearer ${token}`
 }
-
 
 utils.loginUser = async (username, password) => {
   const token = await authService.loginUser(username, password)

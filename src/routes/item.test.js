@@ -396,7 +396,7 @@ describe('TASK Unit Tests - creation and retrival', () => {
         let expected = JSON.parse(JSON.stringify(utils.todos.filter((todo) => todo.uid===auid)))
         let status=200
         for (let j=0;j<expected.length;j++) {
-          expected[j].items = utils.items.filter((item) => item.tid===expected[j].id)
+          expected[j].items = JSON.parse(JSON.stringify(utils.items.filter((item) => item.tid===expected[j].id)))
         }
         if (expected.length===0) {
           expected={message: `User_${auid} has no accessible Todos`}
@@ -420,7 +420,7 @@ describe('TASK Unit Tests - creation and retrival', () => {
       const auid=3
       const expected = JSON.parse(JSON.stringify(utils.todos[tid-1]))
       const status=200
-      expected.items = utils.items.filter((item) => item.tid===expected.id)
+      expected.items = JSON.parse(JSON.stringify(utils.items.filter((item) => item.tid===expected.id)))
       return request(app)
         .get(`/todos/${tid}`)
         .set('Authorization', utils.credentials[auid-1].token)
@@ -435,7 +435,7 @@ describe('TASK Unit Tests - creation and retrival', () => {
       const auid=2
       const expected = JSON.parse(JSON.stringify(utils.todos[tid-1]))
       const status=200
-      expected.items = utils.items.filter((item) => item.tid===expected.id)
+      expected.items = JSON.parse(JSON.stringify(utils.items.filter((item) => item.tid===expected.id)))
       return request(app)
         .get(`/todos/${tid}`)
         .set('Authorization', utils.credentials[auid-1].token)
