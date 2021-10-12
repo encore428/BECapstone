@@ -45,7 +45,7 @@ sets out the framework for the Homework and Project as below:
 </tr>
 <tr><td>The app should be deployed to heroku.</td>
     <td>Deployed to https://todoitem.herokuapp.com/.</td>
-	<td>Completed.</td>
+	<td>Completed.  See [deployment notes](./heroku_deploy.md).</td>
 </tr>
 <tr><td>For the database, you can use the heroku postgres plugin free tier.</td>
     <td>heroku postgres plugin used.</td>
@@ -88,10 +88,6 @@ sets out the framework for the Homework and Project as below:
 	<td>Not started</td>
 </tr>
 </table>
-
-**Database Set-up**
-- To create tables: `npm run db:migrate`
-- To clear tables and reset sequence number to 1: `npm run db:clear`
 
 **Test coverage**
 
