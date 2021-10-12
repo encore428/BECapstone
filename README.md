@@ -45,7 +45,7 @@ sets out the framework for the Homework and Project as below:
 </tr>
 <tr><td>The app should be deployed to heroku.</td>
     <td>Deployed to https://todoitem.herokuapp.com/.</td>
-	<td>Completed.  See [deployment notes](./heroku_deploy.md).</td>
+	<td>Completed.  See <a href="./heroku_deploy.md">deployment notes</a>.</td>
 </tr>
 <tr><td>For the database, you can use the heroku postgres plugin free tier.</td>
     <td>heroku postgres plugin used.</td>
