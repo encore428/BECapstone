@@ -62,7 +62,7 @@ sets out the framework for the Homework and Project as below:
 </tr>
 <tr><td colspan="3">Bonus</td>
 </tr>
-<tr><td>Write integration tests with supertest(https://www.npmjs.com/package/supertest) for all endpoints.</td>
+<tr><td>Write integration tests with supertest (https://www.npmjs.com/package/supertest) for all endpoints.</td>
     <td>Completed with the file tests/int.test.js.</td>
 	<td>'npm test' to execute all tests</td>
 </tr>
