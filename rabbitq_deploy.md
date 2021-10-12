@@ -37,11 +37,11 @@ const router = Router(authMiddleware, authService, amqpService, db)
 ```
 
 - Added new program `src/routes/actlq.js`.  This program is almost identical to `src/routes/actls.js`.  The difference being that
-  `/actlq` instead of `/actls` is used in the url, and that `/actlq` enqueues the request instead of directly invoking `db.updateActl`
-  to perform the update immediately.
+  `/actlq` instead of `/actls` is used in the url, and that `/actlq` invokes `service.publishActlq(actl, auid, email, reqType)` 
+  to enqueue the request instead of directly invoking `db.updateActl` to perform the update inline.
 
 - Add new program `src/services/amqp./js` to implement method `service.publishActlq(actl, auid, email, reqType)`.  This 
-  method is called by `src/routes/actlq.js` to enqueue a access control update request.
+  method is called by `src/routes/actlq.js` to enqueue an access control update request.
   
 - Add new program `src/worker.js` to implement the worker process that consumes messages from the queue.  Each message is a request
   to perform update to access control.  Call `db.updateActl` (the same method used by the endpoints to perform instant update) to 
