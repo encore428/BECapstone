@@ -1,4 +1,4 @@
-#Event-driven access control update on RabbitMQ
+# Event-driven access control update on RabbitMQ
 
 **Functionality Implementation Approach**
 - The application has been built with the endpoint `/actls` to accept and perform access control updates.  That
