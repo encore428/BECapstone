@@ -1,6 +1,6 @@
 # Capstone Project
 
-In an email from qinjiang03@gmail.com dated Aug 24, 2021, the attachment [Capstone Project.pdf](./Capstone Project.pdf) 
+In an email from qinjiang03@gmail.com dated Aug 24, 2021, the attachment <a href="./Capstone Project.pdf">Capstone Project.pdf</a> 
 sets out the framework for the Homework and Project as below:
 
 <ul>
