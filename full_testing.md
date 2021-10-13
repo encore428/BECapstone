@@ -31,7 +31,7 @@ Conducts the integration test.  It repeats many of the tests earlier, but this t
 
 **`actlq.test.js`**
 
-This is modeled from `actls.test.js` to repeat all the validation fail test cases, as well as a few POST test cases.  Due to
+This is modeled from `actl.test.js` to repeat all the validation fail test cases, as well as a few POST test cases.  Due to
 the delayed update by the event-driven approah, the full test results, as well as some test cases that involved updates, 
 have to be conducted manually.
 
@@ -80,7 +80,7 @@ Time:        12.584 s, estimated 23 s
 ```
 
 `npm test src/routes/acltq.test` should be executed again to repeat the test and update the database to a specific state.  After that,
-the application should be bring up, and all remaining tests, meaning thoese tests in `actls.test.js` but not in `actlq.test.js`,
+all remaining tests, meaning thoese tests in `actls.test.js` but not in `actlq.test.js`,
 can be repeated using PostMan, while the result can be observed from the console.log of the worker process.
 
 # Test Script Design
@@ -259,5 +259,94 @@ Both return code and results in JSON format are checked:
     1: POST/actlq/:tid to create Actls queued
       √ POST/ create request of Actl_1 of 3 queued successfully (28 ms)
       √ POST/ create request of Actl_2 of 3 queued successfully (29 ms)
-      √ POST/ create request of Actl_3 of 3 queued successfully (29 ms)```
+      √ POST/ create request of Actl_3 of 3 queued successfully (29 ms)
+```
+
+The following log is observed at the worker console.
+```
+[INFO] retrived from actlq: { actl: { tid: 1, uid: 5, rwlv: 1 }, auid: 1, reqType: 'post' }
+[VALIDATION] User_5 does not exist
+
+[INFO] retrived from actlq: { actl: { tid: 11, uid: 2, rwlv: 1 }, auid: 1, reqType: 'post' }
+[VALIDATION] Todo_11 does not exist
+
+[INFO] retrived from actlq: { actl: { tid: 4, uid: 2, rwlv: 1 }, auid: 1, reqType: 'post' }
+[VALIDATION] User_1 does not own Todo_4
+
+[INFO] retrived from actlq: {       
+  actl: { tid: 4, uid: 0, rwlv: 3 },
+  auid: 2,
+  email: 'three@abcd.com',
+  reqType: 'post'
+}
+[VALIDATION] User_three@abcd.com does not exist
+
+[INFO] retrived from actlq: {
+  actl: { tid: 4, uid: 0, rwlv: 3 },
+  auid: 2,
+  email: 'two@abc.com',
+  reqType: 'post'
+}
+[VALIDATION] you need not create your own access
+
+[INFO] retrived from actlq: { actl: { tid: 1, uid: 5, rwlv: 1 }, auid: 1, reqType: 'put' }
+[VALIDATION] User_5 does not exist
+
+
+[INFO] retrived from actlq: { actl: { tid: 11, uid: 2, rwlv: 1 }, auid: 1, reqType: 'put' }
+[VALIDATION] Todo_11 does not exist
+
+[INFO] retrived from actlq: { actl: { tid: 4, uid: 2, rwlv: 1 }, auid: 1, reqType: 'put' }
+[VALIDATION] User_1 does not own Todo_4
+
+[INFO] retrived from actlq: {
+  actl: { tid: 4, uid: 0, rwlv: 3 },
+  auid: 2,
+  email: 'three@abcd.com',
+  reqType: 'put'
+}
+[VALIDATION] User_three@abcd.com does not exist
+
+[INFO] retrived from actlq: {
+  actl: { tid: 4, uid: 0, rwlv: 3 },
+  auid: 2,
+  email: 'two@abc.com',
+  reqType: 'put'
+}
+[VALIDATION] you need not create your own access
+
+[INFO] retrived from actlq: { actl: { tid: 1, uid: 5, rwlv: 0 }, auid: 1, reqType: 'delete' }
+[VALIDATION] User_5 does not exist
+
+[INFO] retrived from actlq: { actl: { tid: 11, uid: 2, rwlv: 0 }, auid: 1, reqType: 'delete' }
+[VALIDATION] Todo_11 does not exist
+
+[INFO] retrived from actlq: { actl: { tid: 4, uid: 2, rwlv: 0 }, auid: 1, reqType: 'delete' }
+[VALIDATION] User_1 does not own Todo_4
+
+[INFO] retrived from actlq: {
+  actl: { tid: 4, uid: 0, rwlv: 0 },
+  auid: 2,
+  email: 'three@abcd.com',
+  reqType: 'delete'
+}
+[VALIDATION] User_three@abcd.com does not exist
+
+[INFO] retrived from actlq: {
+  actl: { tid: 4, uid: 0, rwlv: 0 },
+  auid: 2,
+  email: 'two@abc.com',
+  reqType: 'delete'
+}
+[VALIDATION] you need not create your own access
+
+[INFO] retrived from actlq: { actl: { tid: 5, uid: 3, rwlv: 3 }, auid: 2, reqType: 'post' }
+[SUCCESS] post completed: {"id":1,"tid":5,"uid":3,"rwlv":3}
+
+[INFO] retrived from actlq: { actl: { tid: 5, uid: 4, rwlv: 1 }, auid: 2, reqType: 'post' }
+[SUCCESS] post completed: {"id":2,"tid":5,"uid":4,"rwlv":1}
+
+[INFO] retrived from actlq: { actl: { tid: 5, uid: 1, rwlv: 1 }, auid: 2, reqType: 'post' }
+[SUCCESS] post completed: {"id":3,"tid":5,"uid":1,"rwlv":1}
+
 ```

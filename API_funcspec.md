@@ -85,7 +85,7 @@ Below is an illustration.
 ]
 ```
 
-**Immediate endpoints for access control**
+**Immediate CUD endpoints for access control**
 
 In addition to the endpoints (`/actlq`) required under event driven access control update, a set of mirrored endpoints (`/actls`)
 were developed to perform the update immediately.  Both sets of endpoints ultimately use the same db update services and

@@ -1,4 +1,4 @@
-**Deployment to heroku**
+# Deployment to heroku
 
 **Application changes**
 - `src/db/index.js`, add the following to cater to heroku deployment:
@@ -19,7 +19,7 @@ if (process.env.MYHEROKU === 'true'){
   })
 }
 ```
-- Add `src/db/global-bundle.pem` downloading from https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem.  This
+- Add `src/db/global-bundle.pem` downloaded from https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem.  This
   file is necessary to connect to postgresql.
   
 - Add `Procfile` with the following so heroku knows how to release and start the application:

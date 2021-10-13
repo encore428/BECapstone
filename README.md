@@ -41,29 +41,29 @@ sets out the framework for the Homework and Project as below:
 </tr>
 <tr><td>Create a Todo list CRUD API</td>
     <td><a href="./API_funcspec.md">Detailed specifications.</a></td>
-	<td>Completed. Extra features implemented.  Refer to the specifications.</a></td>
+	<td>Completed with extra features.  Refer to the specifications.</a></td>
 </tr>
 <tr><td>The app should be deployed to heroku.</td>
-    <td>Deployed to https://todoitem.herokuapp.com/.</td>
-	<td>Completed.  See <a href="./heroku_deploy.md">deployment notes</a>.</td>
+    <td>Deployed to https://todoitem.herokuapp.com/.  See <a href="./heroku_deploy.md">deployment notes</a>.</td>
+	<td>Completed.</td>
 </tr>
 <tr><td>For the database, you can use the heroku postgres plugin free tier.</td>
-    <td>heroku postgres plugin used.</td>
-	<td>Completed.  See <a href="./heroku_deploy.md">deployment notes</a>.</td>
+    <td>heroku postgres plugin used.  See <a href="./heroku_deploy.md">deployment notes</a>.</td>
+	<td>Completed.</td>
 </tr>
 <tr><td>For the message broker, you can use the free tier from rabbitmq.</td>
     <td><a href="./rabbitq_deploy.md">Implementation details.</a></td>
 	<td>Completed.</td>
 </tr>
 <tr><td>The code is required to be covered with unit test for at least 50%.</td>
-    <td>The code has been covered with unit test 100%.</td>
-	<td><a href="./full_testing.md">Details</a></td>
+    <td>Read <a href="./full_testing.md">more</a>.</td>
+	<td>Completed to 100%.</td>
 </tr>
 <tr><td colspan="3">Bonus</td>
 </tr>
 <tr><td>Write integration tests with <a href="https://www.npmjs.com/package/supertest">supertest>/a> for all endpoints.</td>
-    <td>Completed with tests/int.test.js.</td>
-	<td><a href="./full_testing.md">Details</a></td>
+    <td>Read <a href="./full_testing.md">more</a>.</td>
+	<td>Completed to 100%.</td>
 </tr>
 </table>
 

@@ -27,6 +27,7 @@ Add `"amqplib": "^0.8.0",",` to depedencies so as to add MQ functionality to the
 	...
   },
 ```
+In practice, the above is actually effected with `npm install amqplib`.
 
 **New program `src/services/amqp.js`**
 
@@ -203,4 +204,9 @@ Add resource CloudAMQP, pick Little Lemur plan.
 Two new Config Vars will be added: `CLOUDAMQP_APIKEY`, and `CLOUDAMQP_URL`.
 
 The line `worker: npm run worker` in `Procfile` will add one more Dyno in the application Overview.  Configure to 
-turn on that Dyno at heroku console.  Output from the worker can be viewed at `View logs`.
+turn on that Dyno at heroku console.
+
+![heroku dyno](./dyno.png)
+
+Output from the worker can be viewed at `View logs`.
+
