@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "db:migrate": "node scripts/migrate.js",
-    "db:clear": "node scripts/clear.js",
+    "db:dbsetup": "node scripts/dbsetup.js",
+    "db:dbreset": "node scripts/dbreset.js",
     "worker": "node src/worker.js",
     "test": "jest --runInBand --coverage"
   },
