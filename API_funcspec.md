@@ -1,10 +1,11 @@
-#Detailed functional specifications of API
+# Detailed functional specifications of API
 
-#Functional deviations
+# Functional deviations
 
-Id devliering the project, the following enhancement were made to the original specifications.
+In delivering the project, the following enhancement were made to the original specifications.
 
 **More sophisticated access control**
+
 - The access control endpoints handles POST, PUT, and DELETE of access controls.
 - Read only, or read and write access can be granted by the owner of a Todo for a non-owner users to access the Todo.
 - With write access, the guest user can update a Todo, add/update/delete Items belonging to that Todo.
@@ -14,6 +15,7 @@ Id devliering the project, the following enhancement were made to the original s
   requester to have write access to both Todos to accomplish.
 
 **Additional `/todos/0` endpoint**  
+
 This endpoint returns an array of Todos that the requester has read access to, and each Todo have its Items returned too.
 Below is an illustration.
 ```json
@@ -84,13 +86,16 @@ Below is an illustration.
 ```
 
 **Immediate endpoints for access control**
+
 In addition to the endpoints (`/actlq`) required under event driven access control update, a set of mirrored endpoints (`/actls`)
 were developed to perform the update immediately.  Both sets of endpoints ultimately use the same db update services and
 deliver the same results.
 
 **Full test automation coverage**
+
 Testing of API is very labor intensive.  The jest library provdies an automation tool very suitable for testing API.  So 
 instead of conducting tests with PostMan, all tests are programmed into five `test.js` files.
+
 - `auth.test.js` tests the user registration and login process, and verifies that all other end-points are
   rejected if not authendicated.
 - `todo.test.js` tests only CRUD of Todos.  The test cases are base on the ownership of each Todo and without consideration of
@@ -106,16 +111,19 @@ instead of conducting tests with PostMan, all tests are programmed into five `te
 #Revised functional specification
 
 **Public Entry Endpoints**
+
 - `POST/register`: registration endpoint to create new Users.  Reject a request if {email} has been registered before.
 - `POST/login`: login endpoint that returns a JSON Web token that can be used on authenticated endpoints.
 - Request body for both entry points have an {email} and a {password}.
 
 **Authenticated Functional Entry Endpoints**
+
 - CRUD endpoints for Todos.
 - CUD endpoints to maintain access control for Todos.
 - CUD endpoints for Items.
 
 **CRUD endpoints for Todos**
+
 - `POST/todos`: Create a Todo record.  The record created belongs to the currently authenticated user.
 - `GET/todos`: Return with status code 200 and an array of Todos to which the authenticated user has read access.  
   No children Item is returned.
@@ -127,6 +135,7 @@ instead of conducting tests with PostMan, all tests are programmed into five `te
 - `DELETE/todos/{tid}`: Delete Todo{tid}. Soft-delete should be practiced.
 
 **Access Control in CRUD/Todos**
+
 - If a non-zero {tid} is provided in the endpoint, and no Todo record exists with that {tid}, return with status code 404.
 - Soft-deleted records are considered non-existent.
 - If a non-zero {tid} is provided in the endpoint, and a Todo record is found, yet the current authenticated user has no 
@@ -141,6 +150,7 @@ instead of conducting tests with PostMan, all tests are programmed into five `te
   retrieved.  Even if none is found, return code should be 200.
 
 **CUD endpoints to maintain access control for Todos**
+
 - `POST/actls/{tid}`: A Create endpoint to add access control of the Todo identified by {tid}.
 - `PUT/actls/{tid}`: A Update endpoint to update access control of the Todo identified by {tid}.
 - `DELETE/actls/{tid}`: A Delete endpoint to remove access control of the Todo identified by {tid}.
@@ -158,6 +168,7 @@ instead of conducting tests with PostMan, all tests are programmed into five `te
   does not require any change to the existing access control record.
 
 **CUD endpoints that uses a worker to maintain access control**
+
 - Same as above, but the endpoint is `/actlq/{tid}` instead of `/actls/{tid}`.
 - The endpoints perform the same pre-database validation, and returns the same status code as the corresponding `/actls/{tid}`
   endpoints.
@@ -166,6 +177,7 @@ instead of conducting tests with PostMan, all tests are programmed into five `te
   `/actls/{tid}` endpoints.  The results however are `console.log`ed and not presented to the requester.
 
 **CUD endpoints to maintain Items**
+
 - `POST/items` to create an Item as the child of Todo{tid}.
 - `PUT/items/{iid}` to update Item{iid}.
 - `DELETE/items/{iid}` to delete Item{iid}.
