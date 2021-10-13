@@ -1,6 +1,6 @@
-**Capstone Project**
+# Capstone Project
 
-In an email from qinjiang03@gmail.com dated Aug 24, 2021, the attachment <a href="./Capstone Project.pdf">[Capstone Project.pdf]</a> 
+In an email from qinjiang03@gmail.com dated Aug 24, 2021, the attachment [Capstone Project.pdf](./Capstone Project.pdf) 
 sets out the framework for the Homework and Project as below:
 
 <ul>
@@ -61,9 +61,9 @@ sets out the framework for the Homework and Project as below:
 </tr>
 <tr><td colspan="3">Bonus</td>
 </tr>
-<tr><td>Write integration tests with <a href="https://www.npmjs.com/package/supertest">supertest>/a> for all endpoints.</td>
+<tr><td>Write integration tests with <a href="https://www.npmjs.com/package/supertest">supertest</a> for all endpoints.</td>
     <td>Read <a href="./full_testing.md">more</a>.</td>
-	<td>Completed to 100%.</td>
+	<td>Completed.</td>
 </tr>
 </table>
 
