@@ -35,19 +35,25 @@ To implement method `service.publishActlq(actl, auid, email, reqType)`.  This is
 const amqplib = require('amqplib')
 ```  
 
-It exposes it's `service.publishActlq` method.  This method is called by `src/routes/actlq.js` to enqueue an access control 
-update request.
+It exposes it's `service.publishActlq` method.  This method is called by `src/routes/actlq.js` to enqueue access control 
+update requests.
 ```js
 module.exports = () => {
 ...
   service.publishActlq = async (actl, auid, email, reqType) => {
+    ...
+    const result = await channel.sendToQueue(
+      QUEUE,
+      ...
+    )
+    ...	
   }
-
+  ...
   return service
 }
 ```
 
-Also note these two lines that expects the name of the queue to be present in the env file.
+Also note these two lines that expect the name of the queue to be present in the env file.
 ```js
 require('dotenv').config()
 ...
@@ -60,8 +66,8 @@ To implement a worker process to consume messages from the queue.  This is the o
 ```js
 const amqplib = require('amqplib')
 ```  
-Each message is a request to perform update to access control.  This program invokes `db.updateActl` (the same method used 
-by `src/routes/actls.js` endpoint to perform instant update) to perform the update, and console.log the result.  It therefore
+Each message is a request to perform update to access control.  This program invokes `db.updateActl()` (the same method used 
+by `/actls/{tid}` to perform instant update) to perform the update, and `console.log` the result.  It therefore
 is necessary that the program also requires `('/db')`.
 ```js
 ...
@@ -91,29 +97,28 @@ Add these lines to bring in the services rendered by `src/services/amqp.js`:
 const AmqpService = require('./services/amqp')  // for utils.js, it is ('../src/services/amqp')
 const amqpService = AmqpService()
 ```
-  and to include `amqpService` in `router`, so as to make it's services available to endpoints that need them.
+Anclude `amqpService` in `router`, so as to make it's services available to endpoints that need them.
 ```
 const router = Router(authMiddleware, authService, amqpService, db)
 ```
 
 **Modify `src/routes/index.js`**
 
-To accept amqpService by adding it to the argument list:
+To accept `amqpService` by adding it to the argument list:
 ```js
 module.exports = (authMiddleware, authService, amqpService, db) => {
 
 ```
-  add to provide it to a new endpoint `/actlq` by adding this line: 
+Add new endpoint `/actlq/{tid}`, and pass to it access to `amqpService` by adding this line: 
 ```js
   router.use('/actlq', require('./actlq')(amqpService))
 ```
 
-**For new endpoints `/actlq/:{tid}`**
+**New program `src/routes/actlq.js`**
 
-Add new program `src/routes/actlq.js`.  This program is almost identical to `src/routes/actls.js`. 
-The difference being that `/actlq` is used in the url instead of `/actls`, and that `src/routes/actlq.js` 
-invokes `service.publishActlq()` to enqueue the request instead of `src/routes/actls.js`'s invoking `db.updateActl()` to perform 
-the update inline.
+This program is modeled from `src/routes/actls.js`.   The difference being that `/actlq` is used in the url instead 
+of `/actls`, and that `src/routes/actlq.js` invokes `service.publishActlq()` to enqueue the request instead 
+of `src/routes/actls.js`'s invoking `db.updateActl()` to perform the update inline.
 ```js
 const express = require('express')
 ...
@@ -154,7 +159,9 @@ Add `"worker": "node src/worker.js",` to scripts, so that the worker process can
   },
 ```
 
-- To `Procfile`, add the following so heroku knows that there is a worker process and how it is started:
+**Modify `Procfile`**
+
+Add the following so heroku knows that there is a worker process and how it is started:
 ```
 worker: npm run worker
 ```  
@@ -162,11 +169,11 @@ worker: npm run worker
 **New Testing program `src/routes/actlq.test.js`**
 
 This program is almost identical to `src/routes/actls.test.js`.  The difference being that since the update is delayed:
-1. All validation failure test cases that do not require database reference are replicated and will behave exactkly the same.
+1. All validation failure test cases that do not require database reference are replicated and behave exactly the same.
 1. All validation failure test cases that require database referece are replicated.  But instead of immediate rejection, 
    the request is enqueued, and the response to API is always 202.  These cases are included beause no database 
    update will take place, and therefore the result of any one does not affect anohter.
-1. Allo validation success with database updating test cases are excluded except for three POST requests.
+1. All validation success with database updating test cases are excluded except for three POST requests.
 1. The rest of the test should be conducted manually using postman.
 
 # Local Deployment
@@ -177,7 +184,7 @@ Start a docker container to deploy rabbit mq with:
 ```bash
 docker run -it -d --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 ```
-To monitor RabbitMQ, to to http://localhost:15672/
+To monitor RabbitMQ, go to http://localhost:15672/
 
 Start the worker process.  The console.log from the worker are shown here.
 ```bash

@@ -93,22 +93,10 @@ deliver the same results.
 
 **Full test automation coverage**
 
-Testing of API is very labor intensive.  The jest library provdies an automation tool very suitable for testing API.  So 
-instead of conducting tests with PostMan, all tests are programmed into five `test.js` files.
+The code has been covered with full auto unit test and integration test.  Details [here](./full_testing.md).
 
-- `auth.test.js` tests the user registration and login process, and verifies that all other end-points are
-  rejected if not authendicated.
-- `todo.test.js` tests only CRUD of Todos.  The test cases are base on the ownership of each Todo and without consideration of
-  the effect of access control records.  Ownership means that a Todo record is only accessible to it's owner, and owner is
-  the user who created that Todo record.
-- `items.test.js` tests CUD of Items, which must be related to Todos.  Like Todo test, the test cases are based only on ownership
-  of Todos. 
-- `actl.test.js` tests CUD of Actls (access control records).
-- All the above unit tests include negative test cases to exhaust all imagineable input and error situations.
-- Finally `int.test.js` conducts the integration test.  It repeats many of the tests earlier, but this time the full effect 
-  of access control is verified.
 
-#Revised functional specification
+# Revised functional specification
 
 **Public Entry Endpoints**
 
