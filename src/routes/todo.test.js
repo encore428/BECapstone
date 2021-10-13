@@ -5,8 +5,7 @@ const app = utils.app
 //const db = utils.db
 
 beforeAll(async () => {
-  console.log('******** BEGIN Todos unit tests **** ')
-  await utils.setup()
+  await utils.dbReset()
   for (let i=0;i<utils.credentials.length;i++) {
     utils.credentials[i].token = await utils.registerUser(utils.credentials[i].username, utils.credentials[i].password)
   }
@@ -14,7 +13,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   //await utils.teardown()
-  console.log('******** END   Todos unit tests **** ')
 })
 
 

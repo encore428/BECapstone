@@ -6,8 +6,7 @@ const app = utils.app
 //const db = utils.db
 
 beforeAll(async () => {
-  console.log('******** BEGIN unit tests for item **** ')
-  await utils.setup()
+  await utils.dbReset()
   utils.credentials[0].token = await utils.registerUser(utils.credentials[0].username, utils.credentials[0].password)
   utils.credentials[1].token = await utils.registerUser(utils.credentials[1].username, utils.credentials[1].password)
   utils.credentials[2].token = await utils.registerUser(utils.credentials[2].username, utils.credentials[2].password)
@@ -21,7 +20,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   //await utils.teardown()
-  console.log('******** END   unit tests for item **** ')
 })
 
 describe('TASK Unit Tests - set-up Todos', () => {

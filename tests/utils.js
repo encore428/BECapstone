@@ -3,13 +3,15 @@ const App = require('../src/app')
 const Router = require('../src/routes')
 const AuthMiddleware = require('../src/middlewares/auth')
 const AuthService = require('../src/services/auth')
+const AmqpService = require('../src/services/amqp')
 const db = require('../src/db')
 
 const utils = {}
 
+const amqpService = AmqpService()
 const authService = AuthService(db)
 const authMiddleware = AuthMiddleware(authService)
-const router = Router(authMiddleware, authService, db)
+const router = Router(authMiddleware, authService, amqpService, db)
 const app = App(router)
 
 utils.app = app
@@ -54,12 +56,12 @@ utils.items = [
   { id: 10, title: `Item_10 of Todo_9 created by ${utils.credentials[3-1].username}`, completed: false, tid:9, uid: 3}
 ]
 
-utils.setup = async () => {
-  await db.initialise()
-  await db.clearActlsTable()
-  await db.clearItemsTable()
-  await db.clearTodosTable()
-  await db.clearUsersTable()
+utils.dbSetup = async () => {
+  await db.fullReset()
+}
+
+utils.dbReset = async () => {
+  await db.clearAllTables()
 }
 
 utils.teardown = async () => {

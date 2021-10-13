@@ -2,7 +2,7 @@ const express = require('express')
 const swaggerUi = require('swagger-ui-express')
 const swaggerJsdoc = require('swagger-jsdoc')
 
-module.exports = (authMiddleware, authService, db) => {
+module.exports = (authMiddleware, authService, amqpService, db) => {
   const router = express.Router()
 
   /**
@@ -41,7 +41,7 @@ module.exports = (authMiddleware, authService, db) => {
   router.use('/todos', require('./todos')(db))
   router.use('/items', require('./items')(db))
   router.use('/actls', require('./actls')(db))
-  
+  router.use('/actlq', require('./actlq')(amqpService))
 
   return router
 }

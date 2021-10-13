@@ -24,11 +24,23 @@ const db = {
   ...require('./actls')(pool),
 }
 
-db.initialise = async () => {
+db.fullReset = async () => {
+  await pool.query(`
+    DROP TABLE IF EXISTS Actls
+  `)
+  await pool.query(`
+    DROP TABLE IF EXISTS Items
+  `)
+  await pool.query(`
+    DROP TABLE IF EXISTS Todos
+  `)
+  await pool.query(`
+  DROP TABLE IF EXISTS Users
+  `)
   await pool.query(`
     CREATE TABLE IF NOT EXISTS Users (
       id SERIAL PRIMARY KEY,
-      username VARCHAR(100) NOT NULL,
+      username VARCHAR(100) NOT NULL UNIQUE,
       password_hash VARCHAR(100) NOT NULL
     )
   `)
@@ -60,7 +72,8 @@ db.initialise = async () => {
       uid INTEGER NOT NULL,
       rwlv INTEGER NOT NULL DEFAULT 1,
       FOREIGN KEY (tid) REFERENCES Todos(id),
-      FOREIGN KEY (uid) REFERENCES Users(id)
+      FOREIGN KEY (uid) REFERENCES Users(id),
+      UNIQUE (tid, uid)
     )
   `)
 }

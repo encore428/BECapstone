@@ -9,13 +9,11 @@ const app = utils.app
 
 
 beforeAll(async () => {
-  console.log('******** BEGIN unit tests for auth **** ')
-  await utils.setup()
+  await utils.dbReset()
 })
 
 afterAll(async () => {
   //await utils.teardown()
-  console.log('******** END unit tests for auth **** ')
 })
 
 describe('AUTH Unit test', () => {

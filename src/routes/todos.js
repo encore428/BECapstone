@@ -128,7 +128,7 @@ module.exports = (db) => {
       const todos = await db.findAllTodos(auid)
       if (todos && todos.length>0) {
         const todosNitems = todos.map((todo) => {delete todo.actl; return todo})
-        for (i=0;i<todosNitems.length;i++) {
+        for (let i=0;i<todosNitems.length;i++) {
           delete todosNitems[i].actl
           let items = await db.getItemsByTodoId(todosNitems[i].id)
           todosNitems[i].items = items

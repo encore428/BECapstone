@@ -4,7 +4,7 @@ module.exports = (pool) => {
   const db = {}
 
   // This one method handles all INSERT/UPDATE/DELETE requests to Actls
-  db.updateActl = async (actl, auid, email, isPost) => {
+  db.updateActl = async (actl, auid, email, reqType) => {
     const actl1 = new Actl (actl.tid, actl.uid, actl.rwlv)
     const chkTodo = await pool.query(
       'SELECT id, title, uid FROM Todos WHERE id=$1 AND NOT deleted',
@@ -50,7 +50,7 @@ module.exports = (pool) => {
     )
     if (chkActl.rowCount===0) {
       // actl does not exist,
-      if (isPost) {
+      if (reqType==='post') {
         // so create it and return
         const res = await pool.query(
           'INSERT INTO Actls (tid,uid,rwlv) VALUES ($1,$2,$3) RETURNING id,tid,uid,rwlv',
@@ -58,7 +58,7 @@ module.exports = (pool) => {
         )
         return new Actl(res.rows[0])
       }
-      if (!isPost || (actl.rwlv===0)) {
+      if (reqType!=='post' || (actl.rwlv===0)) {
         // if this is a PUT or DELETE, return id=0 to signal old actl not found to update/delete
         actl1.id=0
         return actl1
@@ -78,7 +78,7 @@ module.exports = (pool) => {
       // the actl already exist and with same access level, just return
       return oldActl
     }
-    if ((oldActl.rwlv>actl.rwlv) && (isPost)) {
+    if ((oldActl.rwlv>actl.rwlv) && (reqType==='post')) {
       // the actl already exist with more access level, and this is a POST just return
       return oldActl
     }

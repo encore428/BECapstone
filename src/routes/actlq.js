@@ -4,7 +4,7 @@ const Actl = require('../models/actl')
 // Todo to which this access control is targeting.  It is never the id of the access control
 // record itself.
 
-module.exports = (db) => {
+module.exports = (amqpService) => {
   const router = express.Router()
   const isInteger = (n) =>  /^\+?(0|[1-9]\d*)$/.test(n)
   
@@ -25,11 +25,11 @@ module.exports = (db) => {
 
   /**
    * @openapi
-   * /actls:
+   * /actlq:
    *  post:
    *    tags:
    *    - actls
-   *    description: Create an actl
+   *    description: queue a request to create an Actl
    *    requestBody:
    *      required: true
    *      content:
@@ -89,20 +89,10 @@ module.exports = (db) => {
         return
       }
     }
-    const newActl = email?new Actl({ tid, uid:0, rwlv }):new Actl({ tid, uid, rwlv })
+    const actl = email?new Actl({ tid, uid:0, rwlv }):new Actl({ tid, uid, rwlv })
     const reqType='post'
-    const actl = await db.updateActl(newActl, auid, email, reqType)
-    if (actl.tid===0) {
-      res.status(404).send({message: `Todo_${tid} does not exist`})
-    } else if (actl.rwlv===-1) {
-      res.status(403).send({message: `User_${auid} does not own Todo_${tid}`})
-    } else if (actl.uid===0) {
-      res.status(404).send({message: `User_${email?email:uid} does not exist`})
-    } else if (auid===actl.uid) {
-      res.status(403).send({message: 'you need not create your own access'})
-    } else {
-      res.status(201).send(actl)
-    }
+    await amqpService.publishActlq(actl, auid, email, reqType)
+    res.status(202).send({message: `User_${auid} request to grant User_${email?email:uid} ${rwlv===1?'read':'write'} access to Todo_${tid} queued`})
   })
 
 
@@ -182,26 +172,10 @@ module.exports = (db) => {
         return
       }
     }
-    const updatedActl = new Actl({ tid, uid, rwlv })
+    const actl = email?new Actl({ tid, uid:0, rwlv }):new Actl({ tid, uid, rwlv })
     const reqType='put'
-    const actl = await db.updateActl(updatedActl,auid,email,reqType)
-    if (actl.id===0) {
-      res.status(404).send({message: `Actl for User_${email?email:uid} to Todo_${tid} does not exist`})
-    } else if (actl.tid===0) {
-      res.status(404).send({message: `Todo_${tid} does not exist`})
-    } else if (actl.rwlv===-1) {
-      res.status(403).send({message: `User_${auid} does not own Todo_${tid}`})
-    } else if (actl.uid===0) {
-      if (!email) {
-        res.status(404).send({message: `User_${uid} does not exist`})
-      } else {
-        res.status(404).send({message: `User_${email} does not exist`})
-      }
-    } else if (auid===actl.uid) {
-      res.status(403).send({message: 'you cannot and need not change your own access'})
-    } else {
-      res.status(200).send(actl)
-    }
+    await amqpService.publishActlq(actl, auid, email, reqType)
+    res.status(202).send({message: `User_${auid} request to change User_${email?email:uid} access to Todo_${tid} into ${rwlv===1?'read':'write'} queued`})
   })
 
   /**
@@ -261,27 +235,10 @@ module.exports = (db) => {
       }
     }
     const rwlv = 0
-    const updatedActl = new Actl({ tid, email, uid, rwlv })
+    const actl = email?new Actl({ tid, uid:0, rwlv }):new Actl({ tid, uid, rwlv })
     const reqType='delete'
-    const actl = await db.updateActl(updatedActl, auid, email, reqType)
-    if (actl.id===0) {
-      res.status(404).send({message: `Actl for User_${email?email:uid} to Todo_${tid} does not exist`})
-    } else if (actl.tid===0) {
-      res.status(404).send({message: `Todo_${tid} does not exist`})
-    } else if (actl.rwlv===-1) {
-      res.status(403).send({message: `User_${auid} does not own Todo_${tid}`})
-    } else if (actl.uid===0) {
-      if (!email) {
-        res.status(404).send({message: `User_${uid} does not exist`})
-      } else {
-        res.status(404).send({message: `User_${email} does not exist`})
-      }
-    } else if (auid===actl.uid) {
-      res.status(403).send({message: 'you cannot and need not delete your own access'})
-    } else {
-      res.status(200).send(actl)
-    }
-
+    await amqpService.publishActlq(actl, auid, email, reqType)
+    res.status(202).send({message: `User_${auid} request to delete User_${email?email:uid} access to Todo_${tid} queued`})
   })
 
   return router
