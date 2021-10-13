@@ -210,3 +210,4 @@ turn on that Dyno at heroku console.
 
 Output from the worker can be viewed at `View logs`.
 
+![worker log](./worker.log.png)
