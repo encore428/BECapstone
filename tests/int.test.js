@@ -874,6 +874,21 @@ describe('DELETE/todos,items success for owners and write-access', () => {
     })
   })
   describe('3: DELETE/todos', () => {
+    it('PUT/items/9 success by owner', async () => {
+      const iid=9
+      const auid=utils.todos[utils.items[iid-1].tid-1].uid
+      const expected=JSON.parse(JSON.stringify(utils.items[iid-1]))
+      expected.title='new title'
+      return await request(app)
+        .put(`/items/${iid}`)
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: expected.title})
+        .expect(200)
+        .then(response => {
+          expect(response.body)
+            .toEqual(expected)
+        })
+    })
     it('DELETE/todo/9 success by owner', async () => {
       const tid=9
       const auid=utils.todos[tid-1].uid
@@ -882,6 +897,35 @@ describe('DELETE/todos,items success for owners and write-access', () => {
         .delete(`/todos/${tid}`)
         .set('Authorization', utils.credentials[auid-1].token)
         .expect(200)
+        .then(response => {
+          expect(response.body)
+            .toEqual(expected)
+        })
+    })
+    it('PUT/items/9 fails due to Todo deleted even when item is not', async () => {
+      const iid=9
+      const tid=utils.items[iid-1].tid
+      const auid=utils.todos[tid-1].uid
+      const expected={message: `Todo_${tid} of Item_${iid} not found`}
+      return await request(app)
+        .put(`/items/${iid}`)
+        .set('Authorization', utils.credentials[auid-1].token)
+        .send({title: 'another title'})
+        .expect(404)
+        .then(response => {
+          expect(response.body)
+            .toEqual(expected)
+        })
+    })
+    it('DELETE/items/9 fails due to Todo deleted even when item is not', async () => {
+      const iid=9
+      const tid=utils.items[iid-1].tid
+      const auid=utils.todos[tid-1].uid
+      const expected={message: `Todo_${tid} of Item_${iid} not found`}
+      return await request(app)
+        .delete(`/items/${iid}`)
+        .set('Authorization', utils.credentials[auid-1].token)
+        .expect(404)
         .then(response => {
           expect(response.body)
             .toEqual(expected)

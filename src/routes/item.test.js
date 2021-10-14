@@ -22,7 +22,7 @@ afterAll(async () => {
   //await utils.teardown()
 })
 
-describe('TASK Unit Tests - set-up Todos', () => {
+describe('ITEM Unit Tests - set-up Todos', () => {
 
   describe('0: POST/todos to create Todos', () => {
     for (let idx=0;idx<utils.todos.length;idx++) {
@@ -44,7 +44,7 @@ describe('TASK Unit Tests - set-up Todos', () => {
   })
 })
 
-describe('TASK Unit Tests - negative test cases', () => {
+describe('ITEM Unit Tests - negative test cases', () => {
   describe('1: POST/item, input validation, reject with a message', () => {
     it('should reject 400 when body is absent', async () => {
       const auid=1
@@ -356,7 +356,7 @@ describe('TASK Unit Tests - negative test cases', () => {
   })
 })
 
-describe('TASK Unit Tests - creation and retrival', () => {
+describe('ITEM Unit Tests - creation and retrival', () => {
   describe('4: Create Items for Todos', () => {
     for (let idx=0;idx<utils.items.length;idx++) {
       const i=idx
@@ -446,7 +446,7 @@ describe('TASK Unit Tests - creation and retrival', () => {
   })
 })
 
-describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
+describe('ITEM Unit Tests - update Items to observe Todo ownership', () => {
   describe('7: PUT/items/:iid negative cases', () => {
     it('PUT/items/4 reject 403 when requested by non-owner User_1', async () => {
       const iid=4
@@ -589,7 +589,7 @@ describe('TASK Unit Tests - update Items to observe Todo ownership', () => {
   })
 })
 
-describe('TASK Unit Tests - delete Items to observe Todo ownership', () => {
+describe('ITEM Unit Tests - delete Items to observe Todo ownership', () => {
   describe('7: DELETE/items/:iid negative cases', () => {
     const iid=9
     const auid=1

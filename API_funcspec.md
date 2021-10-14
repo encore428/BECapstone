@@ -131,7 +131,7 @@ The code has been covered with full auto unit test and integration test.  Detail
 - Soft-deleted records are considered non-existent.
 - If a non-zero {tid} is provided in the endpoint, and a Todo record is found, yet the current authenticated user has no 
   necessary access to the Todo, do not perform any processing, but return with status code 403 with an error message.
-- *Necessary access* means: Owner as well as users given write access to the Todo can GET/PUT/DELETE the Todo.  Users given
+- *Necessary access* means: Owner, as well as users given write access to the Todo can GET/PUT/DELETE the Todo.  Users given
   read access to the Todo can only GET the Todo.
 - If a non-zero {tid} is provided in the endpoint, and a Todo record is found, and the current authenticated user has the 
   *necessary access* to the Todo, perform the required processing, and return with status code 200 with the Todo record.
@@ -145,15 +145,15 @@ The code has been covered with full auto unit test and integration test.  Detail
 - `POST/actls/{tid}`: A Create endpoint to add access control of the Todo identified by {tid}.
 - `PUT/actls/{tid}`: A Update endpoint to update access control of the Todo identified by {tid}.
 - `DELETE/actls/{tid}`: A Delete endpoint to remove access control of the Todo identified by {tid}.
-- Request body will identify the user by either a numeric {uid} or an {email} address.
-- Except for DELETE, request body must provide an access indicator {rmlw}, 1 for read, and 3 for write.
 - Return 404 if Todo{tid} does not exist.
-- Return 404 if User{email/uid} does not exist.
 - Return 403 forbidden if current authenticated user is not the owner of Todo{tid}.
+- Request body will identify the user, to whom the access is to be granted to, by either a numeric {uid} or an {email} address.
+- Return 404 if User{email/uid} does not exist.
+- Except for DELETE, request body must provide an access indicator {rwlv}, 1 for read, and 3 for write.
 - Except for POST, return 404 if Access control record for User{email/uid} to Todo{tid} does not exist.
 - For POST request: If there is no existing access, create the access according to the request;  If the targetted access control 
   record already exists, upgraded to write access if the POST is to create a write, otherwise, the access control is not changed.
-- For PUT request, the targetted access control record will be updated to read or write as per the PUT request.
+- For PUT request, the targetted access control record will be changed to read or write as per the PUT request.
 - The request when executed successfully, will return with status code 200, and in JSON object format the access control record 
   just created (POST), just updated (PUT), or just before deletion (DELETE).  This is the case even if the POST or PUT request
   does not require any change to the existing access control record.
@@ -173,7 +173,7 @@ The code has been covered with full auto unit test and integration test.  Detail
 - `PUT/items/{iid}` to update Item{iid}.
 - `DELETE/items/{iid}` to delete Item{iid}.
 - Request body to provide {tid} and {title} for POST; one or more of these: {title}, {completed}, {new_tid} for PUT.
-- Return 404 if Item{iid} does not exist.  When it does exist, obtain {tid} from the retrieved Item record.
+- For PUT and DELETE, return 404 if Item{iid} does not exist.  When it does exist, obtain {tid} from the retrieved Item record.
 - For PUT, if {new_tid} is provided in the body, return 404 if Todo{new_tid} does not exist. 
 - For POST and DELETE, the authenticated user must have write access to Todo{tid} that is the parent of the Item{iid}.
 - For PUT, the authenticated user must have read or write access to Todo{tid} that is the parent of the Item{iid}. 

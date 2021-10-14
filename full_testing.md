@@ -43,13 +43,13 @@ have to be conducted manually.
 
 File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 -----------------|---------|----------|---------|---------|-------------------
-All files        |    98.2 |    97.44 |   95.89 |   98.16 |
+All files        |   98.22 |    97.47 |   95.89 |   98.18 |
  src             |     100 |      100 |     100 |     100 |
   app.js         |     100 |      100 |     100 |     100 |
- src/db          |   94.44 |    92.92 |      92 |   94.23 |
+ src/db          |   94.64 |     93.2 |      92 |   94.44 |
   actls.js       |     100 |       90 |     100 |     100 | 61,90
   index.js       |   71.79 |       50 |   71.42 |   71.79 | 6,28-68,94-95
-  items.js       |    98.9 |    98.03 |     100 |    98.8 | 111
+  items.js       |   98.98 |    98.18 |     100 |   98.91 | 116
   todos.js       |     100 |    85.71 |     100 |     100 | 46,66
   users.js       |     100 |      100 |     100 |     100 |
  src/middlewares |     100 |    83.33 |     100 |     100 |
@@ -71,12 +71,11 @@ All files        |    98.2 |    97.44 |   95.89 |   98.16 |
   auth.js        |   96.77 |      100 |     100 |   96.77 | 44
  tests           |   96.87 |      100 |      80 |   96.87 |
   utils.js       |   96.87 |      100 |      80 |   96.87 | 60
-
 ```
 Test Suites: 6 passed, 6 total
-Tests:       377 passed, 377 total
+Tests:       380 passed, 380 total
 Snapshots:   0 total
-Time:        12.584 s, estimated 23 s
+Time:        11.109 s
 ```
 
 `npm test src/routes/acltq.test` should be executed again to repeat the test and update the database to a specific state.  After that,

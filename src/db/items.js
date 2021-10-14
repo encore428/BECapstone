@@ -61,6 +61,11 @@ module.exports = (pool) => {
       'SELECT id,title,uid FROM Todos WHERE NOT deleted AND id=$1',
       [oldItem.tid]
     )
+    if (chk2.rowCount===0) {
+      item1.id = 0 
+      item1.title = `Todo_${oldItem.tid} of Item_${item.id} not found`
+      return item1
+    }
     if (item.title===undefined) {item.title=oldItem.title;item1.title=oldItem.title}
     if (item.completed===undefined) {item.completed=oldItem.completed;item1.completed=oldItem.completed}
     if (item.tid===undefined) {item.tid=oldItem.tid;item1.tid=oldItem.tid}
@@ -146,6 +151,11 @@ module.exports = (pool) => {
       'SELECT id,title,uid FROM Todos WHERE NOT deleted AND id=$1',
       [oldItem.tid]
     )
+    if (chk2.rowCount===0) {
+      item1.id = 0 
+      item1.title = `Todo_${oldItem.tid} of Item_${id} not found`
+      return item1
+    }
     const oldTodo = new Todo (chk2.rows[0])
     // Check that the authed user is either the owner of, or has write access to, the original owning Todo of the Target Item
     if (oldTodo.uid!==auid) {

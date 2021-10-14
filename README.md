@@ -1,7 +1,6 @@
-# Capstone Project
+# Backend Development - Capstone Project
 
-In an email from qinjiang03@gmail.com dated Aug 24, 2021, the attachment <a href="./Capstone Project.pdf">Capstone Project.pdf</a> 
-sets out the framework for the Homework and Project as below:
+The document <a href="./Capstone Project.pdf">Capstone Project.pdf</a> sets out the framework for the Homework and Project as below:
 
 <ul>
 <li>Project Consultation: Tue, 28 Sep, 0900 - 1300 hr</li>
@@ -18,8 +17,6 @@ sets out the framework for the Homework and Project as below:
 		</ul>
 	</ul>
 </ul>
-
-
 
 **Project Title / Description**: Implement a collaborative TODO-list application
 
@@ -48,7 +45,7 @@ sets out the framework for the Homework and Project as below:
 	<td>Completed.</td>
 </tr>
 <tr><td>For the database, you can use the heroku postgres plugin free tier.</td>
-    <td>heroku postgres plugin used.  See <a href="./heroku_deploy.md">deployment notes</a>.</td>
+    <td>heroku postgres plugin used.  See <a href="./postgres_db.md">deployment notes</a>.</td>
 	<td>Completed.</td>
 </tr>
 <tr><td>For the message broker, you can use the free tier from rabbitmq.</td>
