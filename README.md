@@ -63,26 +63,4 @@ The document <a href="./Capstone Project.pdf">Capstone Project.pdf</a> sets out 
 	<td>Completed.</td>
 </tr>
 </table>
-
-<table>
-<tr><th>Other project requirements</th><th>References</th><th>status</th>
-</tr>
-<tr><td colspan="3">Bonus</td>
-</tr>
-<tr><td>Produce an OpenAPI(https://swagger.io/specification/) yaml specs, and use it for request and response validation with 
-    express-openapi-validator(https://github.com/cdimascio/express-openapi-validator#readme).</td>
-    <td></td>
-	<td>Not started</td>
-</tr>
-<tr><td>Have a cronjob that update a global counter in the application on how many tasks have been completed for the entire user 
-    base every 5 minutes.</td>
-    <td></td>
-	<td>Not started</td>
-</tr>
-<tr><td>Have a public socket endpoint that would push updates on the above-mentioned counter whenever it's updated.</td>
-    <td></td>
-	<td>Not started</td>
-</tr>
-</table>
-
   
