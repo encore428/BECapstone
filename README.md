@@ -25,8 +25,8 @@ The document <a href="./Capstone Project.pdf">Capstone Project.pdf</a> sets out 
 </tr>
 <tr>
 <tr><td>Source code zipped (exclude node_modules)</td>
-    <td>Please refer to the repository.</td>
-	<td>To be prepared only at final rollout.</td>
+    <td><a href="https://drive.google.com/file/d/1-3G75lPvxghUArfkIk1nLGAjt6yHo7fY/view?usp=sharing">Download from Google drive.</a></td>
+	<td>Completed</td>
 </tr>
 <tr><td>Link to GitHub repo (either public or grant access)</td>
     <td>https://github.com/encore428/BECapstone</td>
