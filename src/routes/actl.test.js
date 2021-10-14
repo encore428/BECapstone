@@ -11,8 +11,6 @@ beforeAll(async () => {
   utils.credentials[1].token = await utils.registerUser(utils.credentials[1].username, utils.credentials[1].password)
   utils.credentials[2].token = await utils.registerUser(utils.credentials[2].username, utils.credentials[2].password)
   utils.credentials[3].token = await utils.registerUser(utils.credentials[3].username, utils.credentials[3].password)
-  utils.credentials[0].token = await utils.loginUser(utils.credentials[0].username, utils.credentials[0].password)
-  utils.credentials[1].token = await utils.loginUser(utils.credentials[1].username, utils.credentials[1].password)
   utils.credentials[2].token = await utils.loginUser(utils.credentials[2].username, utils.credentials[2].password)
   utils.credentials[3].token = await utils.loginUser(utils.credentials[3].username, utils.credentials[3].password)
 })
@@ -25,7 +23,7 @@ describe('ACTL Unit Tests: test data preparations', () => {
   describe('1: POST/todos to create Todos', () => {
     for (let idx=0;idx<utils.todos.length;idx++) {
       const id=idx+1
-      it(`successful creation of Todo_${id} by User_${utils.todos[id-1].uid} using login token`, async () => {
+      it(`successful creation of Todo_${id} by User_${utils.todos[id-1].uid} using ${utils.todos[id-1].uid<3?'registration':'login'} token`, async () => {
         const auid=utils.todos[id-1].uid
         const expected = JSON.parse(JSON.stringify(utils.todos[id-1]))
         return await request(app)
@@ -40,7 +38,7 @@ describe('ACTL Unit Tests: test data preparations', () => {
       })
     }
   })
-  describe('2: POST/takks to create Items', () => {
+  describe('2: POST/tasks to create Items', () => {
     for (let idx=0;idx<utils.items.length;idx++) {
       const i=idx
       it(`Create Item_${utils.items[i].id} of ${utils.items.length}`, async () => {
@@ -58,7 +56,7 @@ describe('ACTL Unit Tests: test data preparations', () => {
   })
 })
 
-describe('ACTL Validate Tests', () => {
+describe('ACTL Validation Tests', () => {
   describe('1: POST/actls/:tid, input validation before database, negative test cases', () => {
     it('should reject 400 when :tid not numeric', async () => {
       const tid='xyz'

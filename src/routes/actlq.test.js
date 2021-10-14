@@ -12,7 +12,7 @@ beforeAll(async () => {
   utils.credentials[2].token = await utils.registerUser(utils.credentials[2].username, utils.credentials[2].password)
   utils.credentials[3].token = await utils.registerUser(utils.credentials[3].username, utils.credentials[3].password)
   utils.credentials[0].token = await utils.loginUser(utils.credentials[0].username, utils.credentials[0].password)
-  utils.credentials[2].token = await utils.loginUser(utils.credentials[2].username, utils.credentials[2].password)
+  utils.credentials[1].token = await utils.loginUser(utils.credentials[1].username, utils.credentials[1].password)
 })
 
 afterAll(async () => {
@@ -23,7 +23,7 @@ describe('ACTLQ Unit Tests: test data preparations', () => {
   describe('1: POST/todos to create Todos', () => {
     for (let idx=0;idx<utils.todos.length;idx++) {
       const id=idx+1
-      it(`successful creation of Todo_${id} by User_${utils.todos[id-1].uid} using login token`, async () => {
+      it(`successful creation of Todo_${id} by User_${utils.todos[id-1].uid} using ${utils.todos[id-1].uid>2?'registration':'login'} token`, async () => {
         const auid=utils.todos[id-1].uid
         const expected = JSON.parse(JSON.stringify(utils.todos[id-1]))
         return await request(app)
@@ -38,7 +38,7 @@ describe('ACTLQ Unit Tests: test data preparations', () => {
       })
     }
   })
-  describe('2: POST/takks to create Items', () => {
+  describe('2: POST/tasks to create Items', () => {
     for (let idx=0;idx<utils.items.length;idx++) {
       const i=idx
       it(`Create Item_${utils.items[i].id} of ${utils.items.length}`, async () => {
@@ -56,8 +56,8 @@ describe('ACTLQ Unit Tests: test data preparations', () => {
   })
 })
 
-describe('ACTLQ Validate Tests', () => {
-  describe('1: POST/actlq/:tid, input validation before database, negative test cases', () => {
+describe('ACTLQ Validation Tests', () => {
+  describe('1: POST/actlq/:tid,   validation  before database, negative test cases', () => {
     it('should reject 400 when :tid not numeric', async () => {
       const tid='xyz'
       const auid=1
@@ -241,7 +241,7 @@ describe('ACTLQ Validate Tests', () => {
         })
     })
   })
-  describe('2: POST/actlq/:tid, input validation against database, negative test cases', () => {
+  describe('2: POST/actlq/:tid,   validation against database, negative test cases', () => {
     it('should return 202 that request has been queued when body.uid does not exist', async () => {
       const tid=1
       const rwlv=1
@@ -318,7 +318,7 @@ describe('ACTLQ Validate Tests', () => {
         })
     })
   })
-  describe('3: PUT/actlq/:tid, input validation before database, negative test cases', () => {
+  describe('3: PUT/actlq/:tid,    validation  before database, negative test cases', () => {
     it('should reject 400 when :tid not numeric', async () => {
       const tid='xyz'
       const auid=1
@@ -502,7 +502,7 @@ describe('ACTLQ Validate Tests', () => {
         })
     })
   })
-  describe('4: PUT/actlq/:tid, input validation against database, negative test cases', () => {
+  describe('4: PUT/actlq/:tid,    validation against database, negative test cases', () => {
     it('should return 202 that request has been queued when body.uid does not exist', async () => {
       const tid=1
       const rwlv=1
@@ -579,7 +579,7 @@ describe('ACTLQ Validate Tests', () => {
         })
     })
   })
-  describe('5: DELETE/actlq/:tid, input validation before database, negative test cases', () => {
+  describe('5: DELETE/actlq/:tid, validation  before database, negative test cases', () => {
     it('should reject 400 when :tid not numeric', async () => {
       const tid='xyz'
       const auid=1
@@ -717,7 +717,7 @@ describe('ACTLQ Validate Tests', () => {
         })
     })
   })
-  describe('6: DELETE/actlq/:tid, input validation against database, negative test cases', () => {
+  describe('6: DELETE/actlq/:tid, validation against database, negative test cases', () => {
     it('should return 202 that request has been queued when body.uid does not exist', async () => {
       const tid=1
       const rwlv=1

@@ -96,6 +96,9 @@ deliver the same results.
 The code has been covered with full auto unit test and integration test.  Details [here](./full_testing.md).
 
 
+# ER Diagram
+![ER diagram](./ER.png)
+
 # Revised functional specification
 
 **Public Entry Endpoints**
