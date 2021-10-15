@@ -78,9 +78,9 @@ Snapshots:   0 total
 Time:        11.109 s
 ```
 
-`npm test src/routes/acltq.test` should be executed again to repeat the test and update the database to a specific state.  After that,
-all remaining tests, meaning thoese tests in `actls.test.js` but not in `actlq.test.js`,
-can be repeated using PostMan, while the result can be observed from the console.log of the worker process.
+Since both `/actls` and `/actlq` endpoints use the same `db.updateActls()` for secondary validation and database update, full repeat of `/actls` endpoint test cases on
+`/actlq` end point is not necessary.  However, if it is desired to conduct on `/actlq` endpoint those test cases in `actl.test.js` but not in `actlq.test.js`,
+one can repeat `npm test src/routes/acltq.test`, to be followed by those skipped test cases using POSTMAN.
 
 # Test Script Design
 
