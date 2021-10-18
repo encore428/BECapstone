@@ -185,7 +185,7 @@ Both return code and results in JSON format are checked:
       √ successful creation of Todo_7 by User_3 using login token (7 ms)
       √ successful creation of Todo_8 by User_3 using login token (7 ms)
       √ successful creation of Todo_9 by User_3 using login token (7 ms)
-    2: POST/takks to create Items
+    2: POST/tasks to create Items
       √ Create Item_1 of 10 (9 ms)
       √ Create Item_2 of 10 (7 ms)
       √ Create Item_3 of 10 (6 ms)
